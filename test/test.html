@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>YT-ChartX</title>
+    <meta charset='utf-8'>
+    <meta name='renderer' content='webkit'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+    <meta name='viewport'
+        content='width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0'>
+    <script src='../public/jquery/jquery.js'></script>
+    <script src='../public/public.js'></script>
+</head>
+
+<body>
+    目标：实现ECharts的封装，可以通过传参即可实现ECharts图表的渲染
+    <button onclick="b()">11</button>
+    <button onclick="c()">11</button>
+</body>
+<script>
+    css = [
+        "test/test1.css", 
+        "test/test2.css"
+    ];
+    scripts = [
+        "test/test1.js", 
+        "test/test2.js", 
+        "test/test3.js", 
+        "public/yt_chartx.js"
+    ];
+    loadPage(function () {
+        ytchartx();
+        // SN="44444"
+        // alert(sysname)
+        console.log("页面已加载完成！");
+    });
+</script>
+
+</html>
