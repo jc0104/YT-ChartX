@@ -4,21 +4,25 @@ var protocol = window.location.protocol;
 var web_url = protocol + "//" + host + "/";
 //初始化页面加载公共css样式
 var initCss = [
-    "public/style/public.css"
+    "public/style/public.css",
+    "public/layui/layui/css/layui.css",
+    "public/style/icons/font-awesome.min.css"
 ];
 //初始化页面加载公共js脚本
 var initScripts = [
-    "public/sysinfo.js"
+    "public/sysinfo.js",
+    "public/jquery/require/require.min.js",
+    "public/layui/layui/layui.js"
 ];
 //****************************************************************************************************************************************************
 //页面加载-开始
 //----------------------------------------------------------------------------------------------------------------------------------------------------
 var loadPage = function (callback) {
-    var newCss=mergeUnique(initCss,css)
+    var newCss = mergeUnique(initCss, css)
     loadCSS(newCss, 'system-styles', function () {
         console.log("所有css样式已加载完成！");
     });
-    var newScripts=mergeUnique(initScripts,scripts)
+    var newScripts = mergeUnique(initScripts, scripts)
     loadJS(newScripts, function () {
         console.log("所有js脚本已加载完成！");
         if (typeof callback === 'function') callback();
@@ -41,15 +45,16 @@ var loadJS = function (scripts, callback, loadJStype) {
         loadScriptsParallel(scripts, callback)
     }
 }
-// //调用示例
-// scripts = [
-//     "public/test1.js",
-//     "public/test2.js"
-// ];
-// loadJS(scripts, function() {
-//     a();
-//     b();
-// },1);
+/* 调用示例
+ scripts = [
+     "public/test1.js",
+     "public/test2.js"
+ ];
+ loadJS(scripts, function() {
+     a();
+     b();
+ },1);
+*/
 //----------------------------------------------------------------------------------------------------------------------------------------------------
 //方式一、递归顺序加载JS（确保顺序）
 var loadScriptsSequentially = function (scripts, callback) {
@@ -133,15 +138,194 @@ var loadCSS = function (css, themeId, callback) {
             });
     });
 }
-// //调用示例
-// css=[
-//     "test/test11.css",
-//     "test/test2.css"];
-// loadCSS(css, 'test-styles', function () {
-//     console.log("所有css样式已加载完成！");
-// });
+/* 调用示例
+ css=[
+     "test/test11.css",
+     "test/test2.css"];
+ loadCSS(css, 'test-styles', function () {
+     console.log("所有css样式已加载完成！");
+ });
+*/
 //----------------------------------------------------------------------------------------------------------------------------------------------------
 //动态加载css-结束
+//****************************************************************************************************************************************************
+//****************************************************************************************************************************************************
+//加载echarts图表-开始
+//----------------------------------------------------------------------------------------------------------------------------------------------------
+//调用入口
+/*  
+    echarts,    echarts对象
+    echartsSetInfo
+        version，   echarts版本
+        epaths,     echarts脚本文件路径（可以多个）（格式:{版本名：路径}，如：{ 'echarts.5.5.0': 'public/echarts/echarts.5.5.0' ,……}）
+        eDivID,     echarts展示所在div的ID
+        setAPI,     获取echarts配置信息接口信息，格式：{ "url": "", "params": null, "type": "get", "IsAsync": true }
+            url     api地址
+            params  api入参{}
+            type    api请求类型（为空默认为post）
+            IsAsync api是否异步请求（为空默认为false）
+        dataAPI,    获取echarts数据接口信息，格式：{ "url": "", "params": null, "type": "get", "IsAsync": true }
+            url     api地址
+            params  api入参{}
+            type    api请求类型（为空默认为post）
+            IsAsync api是否异步请求（为空默认为false）
+        dNames,     数据字段名称数组（如：['name', 'value', 'value1', 'value2']），
+                    第一个留给xAxis（默认）或yAxis（需要在oCallback回调方法更改）
+        snList      series.name数组（如：['示例1', '示例2', '示例3']）和echarts对象legend的data保持一致
+        stList,     series.type数组（如：['bar', 'line', 'bar']）
+    oCallback,  option赋值完后的回调方法 （多用于对option中的各个属性进行补充扩展）
+    eCallback   echarts对象加载完后的回调方法（多用于对myChart的补充扩展，例如添加点击事件）
+*/
+var showEcharts = function (echartsSetInfo, oCallback, eCallback) {
+    try {
+        var version = echartsSetInfo.version;
+        var epaths = echartsSetInfo.epaths;
+        var eDivID = echartsSetInfo.eDivID;
+
+        var setAPI = echartsSetInfo.setAPI;
+        var dataAPI = echartsSetInfo.dataAPI;
+
+        var dNames = echartsSetInfo.dNames;
+        var snList = echartsSetInfo.snList;
+        var stList = echartsSetInfo.stList;
+
+        require.config({
+            paths: epaths
+        });
+
+        require(['echarts.' + version], function (echarts) {
+            getEchartsSet(setAPI, function (setData) {
+                getEchartsData(dataAPI, setData, function (option, data) {
+                    var dList = Array.from({ length: dNames.length }, () => []);
+                    for (var i = 0; i < data.length; i++) {
+                        for (var n = 0; n < dNames.length; n++) {
+                            dList[n].push(data[i][dNames[n]]);
+                        }
+                    }
+                    try { option.legend[0].data = (IsNull(snList) == "" ? dList[0] : snList); } catch (e) { }
+                    try { option.xAxis[0].data = dList[0]; } catch (e) { }
+
+                    for (var i = 0; i < stList.length; i++) {
+                        if (typeof option.series[i] !== 'undefined' && option.series[i] !== null) {
+                            option.series[i].name = snList[i];
+                            option.series[i].type = stList[i];
+                            if (stList[i] == "pie") {
+                                option.series[i].data = dList[0].map(function (name, index) {
+                                    return {
+                                        value: dList[i + 1][index],
+                                        name: name
+                                    };
+                                });
+                            }
+                            else {
+                                option.series[i].data = dList[i + 1];
+                            }
+                        } else {
+                            var seriess = JSON.parse(JSON.stringify(option.series[0]));
+                            option.series.push(seriess);
+                            option.series[i].name = snList[i];
+                            option.series[i].type = stList[i];
+                            if (stList[i] == "pie") {
+                                option.series[i].data = dList[0].map(function (name, index) {
+                                    return {
+                                        value: dList[i + 1][index],
+                                        name: name
+                                    };
+                                });
+                            }
+                            else {
+                                option.series[i].data = dList[i + 1];
+                            }
+                        }
+                    }
+                    option.version = "ECharts." + echarts.version
+                    if (typeof oCallback === 'function') oCallback(option);
+
+                    console.log(option);
+
+                    var myChart = echarts.init(document.getElementById(eDivID));
+                    myChart.dispose();
+                    myChart.clear();
+                    myChart = echarts.init(document.getElementById(eDivID));
+                    myChart.setOption(option, true);
+
+                    if (typeof eCallback === 'function') eCallback(myChart);
+
+                    $(window).resize(function () {
+                        myChart.resize();
+                    });
+                })
+            });
+        });
+    } catch (e) {
+        alert(e)
+    }
+}
+//----------------------------------------------------------------------------------------------------------------------------------------------------
+//获取echarts图表设置信息
+var getEchartsSet = function name(setAPI, callback) {
+    jQuery.support.cors = true;
+    $.ajax({
+        cache: false,
+        type: (setAPI.type == "" ? "POST" : setAPI.type),
+        async: ((IsNull(setAPI.IsAsync) === false || IsNull(setAPI.IsAsync) == "") ? false : true),
+        url: setAPI.url,
+        data: JSON.stringify(setAPI.params),
+        dataType: "json",
+        contentType: "application/json;charset=utf-8",
+        success: function (setData) {
+            if (typeof callback === 'function') callback(setData);
+        },
+        error: function (xhr, status, err) {
+            console.error("加载失败:", status, err);
+        }
+    });
+}
+//----------------------------------------------------------------------------------------------------------------------------------------------------
+//获取echarts图表展现数据
+var getEchartsData = function name(dataAPI, setData,callback) {
+    jQuery.support.cors = true;
+    $.ajax({
+        cache: false,
+        type: (dataAPI.type == "" ? "POST" : dataAPI.type),
+        async: ((IsNull(dataAPI.IsAsync) === false || IsNull(dataAPI.IsAsync) == "") ? false : true),
+        url: dataAPI.url,
+        data: JSON.stringify(dataAPI.params),
+        dataType: "json",
+        contentType: "application/json;charset=utf-8",
+        success: function (data) {
+            if (typeof callback === 'function') callback(setData, data);
+        },
+        error: function (xhr, status, err) {
+            console.error("加载失败:", status, err);
+        }
+    });
+}
+/* 调用示例
+showEcharts({
+        "epaths": { 'echarts.5.5.0': web_url + 'public/echarts/echarts.5.5.0' },
+        "version": "5.5.0",
+        "eDivID": "eDiv1",
+        "setAPI": { "url": web_url + "data/echarts/base/1.json", "params": null, "type": "get", "IsAsync": true },
+        "dataAPI": { "url": web_url + "data/echarts/data/bar/bar_1_data.json", "params": null, "type": "get", "IsAsync": true },
+        "dNames": ['name', 'value'],
+        "snList": [],
+        "stList": ['bar']
+    },
+    function (option) {
+        option.xAxis[0].show = true
+        console.log(option);
+    },
+    function (myChart) {
+        myChart.on('click', (params) => {
+            console.log(params);
+            alert(params.name + "\r\n" + params.value)
+        })
+    }
+)
+*/
+//----------------------------------------------------------------------------------------------------------------------------------------------------
+//加载echarts图表-结束
 //****************************************************************************************************************************************************
 //****************************************************************************************************************************************************
 //多个一维数组合并去重-开始
@@ -159,10 +343,31 @@ var mergeUnique = function (...arrays) {
 //多个一维数组合并去重-结束
 //****************************************************************************************************************************************************
 //****************************************************************************************************************************************************
+//校验验证-开始
+//----------------------------------------------------------------------------------------------------------------------------------------------------
+//判断字符串是否为空或null或undefined，是返回"",否返回原字符串
+function IsNull(Stra) {
+    var Strb = Stra;
+    try {
+        if (Strb == null || Strb == "null" || Stra == "undefined" || typeof (Stra) == "undefined") {
+            Strb = "";
+        }
+    } catch (e) {
+        Strb = "";
+    }
+    return Strb;
+}
+//----------------------------------------------------------------------------------------------------------------------------------------------------
+//校验验证-结束
+//****************************************************************************************************************************************************
+
+
+
+
+//****************************************************************************************************************************************************
 //XXXXX-开始
 //----------------------------------------------------------------------------------------------------------------------------------------------------
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------
 //XXXXX-结束
 //****************************************************************************************************************************************************
-

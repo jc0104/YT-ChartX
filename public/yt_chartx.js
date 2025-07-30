@@ -1,4 +1,4 @@
-let _data=[];
+let _data = [];
 
 //标题组件
 let _title = [{}];
@@ -76,10 +76,13 @@ let _option = {
 
 
 
-var ytchartx = function (ids, options, version, datas) {
-    console.log(_option);
+// var ytchartx = function (ids, options, version, datas) {
+//     console.log(_option);
 
-}
-var bind_ytchartx = function (id, option, version, data) {
+// }
+// var bind_ytchartx = function (id, option, version, data) {
 
-}
+// }
+
+
+
