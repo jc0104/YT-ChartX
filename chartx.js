@@ -1,18 +1,10 @@
 /^http(s*):\/\//.test(location.href) || alert('请先部署到 localhost 下再访问');
 
-        // var scriptUrl=getCurrentScriptPath();
-        // alert(scriptUrl.split("/"))
-        //  scriptUrl=scriptUrl.replace(scriptUrl.split("/")[scriptUrl.split("/").length-1],"")
-        // alert(scriptUrl)
+var chartxUrl=getCurrentScriptPath();
+// alert(scriptUrl.split("/"))
+chartxUrl=chartxUrl.replace(chartxUrl.split("/")[chartxUrl.split("/").length-1],"")
+// alert(scriptUrl)
 
-
-        (function() {
-            const allScripts = document.scripts;
-            console.log(allScripts);
-            
-            const selfScript = allScripts[allScripts.length - 1];
-            console.log("当前脚本路径：", selfScript.src); // 移除时间戳
-        })();
 // let _data = [];
 // //标题组件
 // let _title = [{}];
@@ -268,6 +260,17 @@ showEcharts({
 */
 //----------------------------------------------------------------------------------------------------------------------------------------------------
 //加载echarts图表-结束
+//****************************************************************************************************************************************************
+//****************************************************************************************************************************************************
+//获取此脚本的访问路径-开始
+//----------------------------------------------------------------------------------------------------------------------------------------------------
+function getCurrentScriptPath() {
+  const scripts = document.getElementsByTagName('script');
+  const currentScript = scripts[scripts.length - 1];
+  return currentScript.src;
+}
+//----------------------------------------------------------------------------------------------------------------------------------------------------
+//获取此脚本的访问路径-结束
 //****************************************************************************************************************************************************
 
 
