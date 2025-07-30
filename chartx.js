@@ -205,7 +205,7 @@ var getEchartsSet = function name(setAPI, callback) {
         async: ((IsNull(setAPI.IsAsync) === false || IsNull(setAPI.IsAsync) == "") ? false : true),
         url: setAPI.url,
         data: JSON.stringify(setAPI.params),
-        dataType: "json",
+        dataType: "jsonp",
         contentType: "application/json;charset=utf-8",
         success: function (setData) {
             if (typeof callback === 'function') callback(setData);
@@ -225,7 +225,7 @@ var getEchartsData = function name(dataAPI, setData,callback) {
         async: ((IsNull(dataAPI.IsAsync) === false || IsNull(dataAPI.IsAsync) == "") ? false : true),
         url: dataAPI.url,
         data: JSON.stringify(dataAPI.params),
-        dataType: "json",
+        dataType: "jsonp",
         contentType: "application/json;charset=utf-8",
         success: function (data) {
             if (typeof callback === 'function') callback(setData, data);
