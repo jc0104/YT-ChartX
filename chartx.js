@@ -231,11 +231,11 @@ var getEchartsData = function name(dataAPI, setData,callback) {
 }
 /* 调用示例
 showEcharts({
-        "epaths": { 'echarts.5.5.0': web_url + 'public/echarts/echarts.5.5.0' },
+        "epaths": { 'echarts.5.5.0': webUrl + 'public/echarts/echarts.5.5.0' },
         "version": "5.5.0",
         "eDivID": "eDiv1",
-        "setAPI": { "url": web_url + "data/echarts/base/1.json", "params": null, "type": "get", "IsAsync": true },
-        "dataAPI": { "url": web_url + "data/echarts/data/bar/bar_1_data.json", "params": null, "type": "get", "IsAsync": true },
+        "setAPI": { "url": webUrl + "data/echarts/base/1.json", "params": null, "type": "get", "IsAsync": true },
+        "dataAPI": { "url": webUrl + "data/echarts/data/bar/bar_1_data.json", "params": null, "type": "get", "IsAsync": true },
         "dNames": ['name', 'value'],
         "snList": [],
         "stList": ['bar']
