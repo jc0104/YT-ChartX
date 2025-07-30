@@ -1,8 +1,26 @@
 /^http(s*):\/\//.test(location.href) || alert('请先部署到 localhost 下再访问');
 
-var chartxUrl=getCurrentScriptPath();
-// alert(scriptUrl.split("/"))
-chartxUrl=chartxUrl.replace(chartxUrl.split("/")[chartxUrl.split("/").length-1],"")
+var chartxUrl = getCurrentScriptPath();
+chartxUrl = chartxUrl.replace(chartxUrl.split("/")[chartxUrl.split("/").length - 1], "")
+
+chartxUrl = (IsNull(chartxUrl) == "" ? webUrl : chartxUrl)
+var ePath = chartxUrl + 'echarts/';
+var echartsSetInfo = {
+    "epaths": {
+        'echarts.4.2.1': ePath + 'echarts.4.2.1',
+        'echarts.5.0.2': ePath + 'echarts.5.0.2',
+        'echarts.5.1.2': ePath + 'echarts.5.1.2',
+        'echarts.5.5.0': ePath + 'echarts.5.5.0'
+    },
+    "version": "5.5.0",
+    "eDivID": "",
+    "setAPI": { "url": "", "params": null, "type": "post", "IsAsync": true },
+    "dataAPI": { "url": "", "params": null, "type": "post", "IsAsync": true },
+    "dNames": ['name', 'value'],
+    "snList": [],
+    "stList": []
+}
+
 // alert(scriptUrl)
 
 // let _data = [];
@@ -217,7 +235,7 @@ var getEchartsSet = function name(setAPI, callback) {
 }
 //----------------------------------------------------------------------------------------------------------------------------------------------------
 //获取echarts图表展现数据
-var getEchartsData = function name(dataAPI, setData,callback) {
+var getEchartsData = function name(dataAPI, setData, callback) {
     jQuery.support.cors = true;
     $.ajax({
         cache: false,
@@ -265,9 +283,9 @@ showEcharts({
 //获取此脚本的访问路径-开始
 //----------------------------------------------------------------------------------------------------------------------------------------------------
 function getCurrentScriptPath() {
-  const scripts = document.getElementsByTagName('script');
-  const currentScript = scripts[scripts.length - 1];
-  return currentScript.src;
+    const scripts = document.getElementsByTagName('script');
+    const currentScript = scripts[scripts.length - 1];
+    return currentScript.src;
 }
 //----------------------------------------------------------------------------------------------------------------------------------------------------
 //获取此脚本的访问路径-结束
