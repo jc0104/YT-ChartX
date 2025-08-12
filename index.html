@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ECharts图表配置器</title>
     <script src='https://jc0104.github.io/YT-ScriptX/scriptx.js'></script>
-    <!-- <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script> -->
     <style>
         * {
             margin: 0;
@@ -28,6 +27,7 @@
             --hover-color: #3a3d4f;
             --shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
             --transition: all 0.3s ease;
+            --header-color: rgba(0, 0, 0, 0.2);
         }
 
         body {
@@ -104,7 +104,7 @@
 
         .section-header {
             padding: 12px 15px;
-            background: rgba(0, 0, 0, 0.2);
+            background: var(--header-color);
             cursor: pointer;
             display: flex;
             justify-content: space-between;
@@ -150,6 +150,11 @@
 
         .form-group {
             margin-bottom: 15px;
+        }
+
+        .form-group hr {
+            border: 0;          /* 先清除默认边框 */
+            border-top: 1px solid var(--primary-color); /* 设置上边框为1px红色实线 */
         }
 
         label {
@@ -241,44 +246,6 @@
             width: 100%;
         }
 
-        .chart-header {
-            margin-bottom: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .chart-title {
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin-bottom: 5px;
-            color: var(--primary-color);
-            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .chart-subtitle {
-            color: var(--text-secondary);
-            font-size: 1rem;
-        }
-
-        .chart-wrapper {
-            flex: 1;
-            background: var(--panel-bg);
-            border-radius: 10px;
-            box-shadow: var(--shadow);
-            overflow: hidden;
-            position: relative;
-            border: 1px solid var(--border-color);
-            /* width: 100%; */
-        }
-
-        #main-chart {
-            width: 100%;
-            height: 100%;
-        }
-
         /* 面板折叠状态 */
         .config-panel.collapsed {
             transform: translateX(-100%);
@@ -316,24 +283,6 @@
             .config-panel {
                 width: 300px;
             }
-        }
-
-        /* 状态指示器 */
-        .status-indicator {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 8px 15px;
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 20px;
-            font-size: 0.85rem;
-        }
-
-        .status-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: var(--secondary-color);
         }
 
         /* 高级选项 */
@@ -386,8 +335,40 @@
         </div>
 
         <div class="panel-content">
-            <!-- 图表类型配置 -->
+            <!-- Echarts相关配置 -->
             <div class="config-section">
+                <div class="section-header" data-section="chart-version">
+                    <div class="section-title">
+                        <i class="fas fa-list-check"></i>
+                        <span>报表信息</span>
+                    </div>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="section-content" id="chart-version">
+                    <div class="form-group">
+                        <label for="chart-name">报表名称</label>
+                        <input type="text" id="chart-name" value="测试报表">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="chart-version-select">Echarts版本</label>
+                        <select id="chart-version-select">
+                            <option value="6.0.0">6.0.0</option>
+                            <option value="5.5.0">5.5.0</option>
+                            <option value="5.1.2">5.1.2</option>
+                            <option value="5.0.2">5.0.2</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="chart-divid">展现容器ID</label>
+                        <input type="text" id="chart-divid" value="main-chart">
+                    </div>
+                </div>
+            </div>
+
+            <!-- 图表类型配置 -->
+            <!-- <div class="config-section">
                 <div class="section-header" data-section="chart-type">
                     <div class="section-title">
                         <i class="fas fa-chart-bar"></i>
@@ -430,7 +411,7 @@
                         </select>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
             <!-- 标题配置 -->
             <div class="config-section">
@@ -443,13 +424,37 @@
                 </div>
                 <div class="section-content" id="title-config">
                     <div class="form-group">
-                        <label for="main-title">主标题</label>
-                        <input type="text" id="main-title" value="销售数据统计">
+                        <label for="title-show">是否显示</label>
+                        <select id="title-show">
+                            <option value="true">展示</option>
+                            <option value="">不展示</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="title-left">标题水平位置</label>
+                        <select id="title-left">
+                            <option value="center">居中</option>
+                            <option value="left">靠左</option>
+                            <option value="right">靠右</option>
+                        </select>
                     </div>
 
                     <div class="form-group">
-                        <label for="sub-title">副标题</label>
-                        <input type="text" id="sub-title" value="2023年各季度数据">
+                        <label for="title-top">标题垂直位置</label>
+                        <select id="title-top">
+                            <option value="top">顶部</option>
+                            <option value="middle">中间</option>
+                            <option value="bottom">底部</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                    <hr/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="main-title">主标题</label>
+                        <input type="text" id="main-title" value="主标题">
                     </div>
 
                     <div class="form-group">
@@ -461,24 +466,58 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="title-position">标题位置</label>
-                        <select id="title-position">
-                            <option value="center">居中</option>
-                            <option value="left">靠左</option>
-                            <option value="right">靠右</option>
+                        <label for="title-font-family">标题字体</label>
+                        <select id="title-font-family">
+                            <option value="PingfangRegular">PingfangRegular</option>
                         </select>
                     </div>
 
                     <div class="form-group">
                         <label for="title-font-size">标题字体大小</label>
                         <input type="range" id="title-font-size" min="12" max="36" value="24">
-                        <span id="font-size-value">24px</span>
+                        <span id="title-font-size-value">24px</span>
+                    </div>
+
+                    <div class="form-group">
+                    <hr/>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="sub-title">副标题</label>
+                        <input type="text" id="sub-title" value="副标题">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sub-title-color">标题颜色</label>
+                        <div class="color-picker">
+                            <div class="color-preview" id="sub-title-preview" style="background: #3498db;"></div>
+                            <input type="text" id="sub-title-color" value="#3498db">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sub-title-font-family">标题字体</label>
+                        <select id="sub-title-font-family">
+                            <option value="PingfangRegular">PingfangRegular</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sub-title-font-size">标题字体大小</label>
+                        <input type="range" id="sub-title-font-size" min="12" max="36" value="12">
+                        <span id="sub-title-font-size-value">12px</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sub-title-font-size">主副标题间距</label>
+                        <input type="range" id="title-itemgap-size" min="0" max="30" value="10">
+                        <span id="title-itemgap-size-value">10px</span>
                     </div>
                 </div>
             </div>
 
             <!-- 数据配置 -->
-            <div class="config-section">
+            <!-- <div class="config-section">
                 <div class="section-header" data-section="data-config">
                     <div class="section-title">
                         <i class="fas fa-database"></i>
@@ -518,10 +557,10 @@
                         <span>高级数据选项</span>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
             <!-- 坐标轴配置 -->
-            <div class="config-section">
+            <!-- <div class="config-section">
                 <div class="section-header" data-section="axis-config">
                     <div class="section-title">
                         <i class="fas fa-chart-line"></i>
@@ -562,10 +601,10 @@
                         <span id="axis-label-value">14px</span>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
             <!-- 图例配置 -->
-            <div class="config-section">
+            <!-- <div class="config-section">
                 <div class="section-header" data-section="legend-config">
                     <div class="section-title">
                         <i class="fas fa-list"></i>
@@ -600,7 +639,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
             <!-- 动作按钮 -->
             <div class="button-group">
@@ -608,14 +647,14 @@
                     <i class="fas fa-sync-alt"></i>
                     <span>应用</span>
                 </button>
-                <button id="reset-config">
+                <!-- <button id="reset-config">
                     <i class="fas fa-undo"></i>
                     <span>重置</span>
                 </button>
                 <button id="export-btn">
                     <i class="fas fa-download"></i>
                     <span>导出</span>
-                </button>
+                </button> -->
             </div>
         </div>
 
@@ -626,31 +665,28 @@
     </div>
 
     <!-- 右侧图表区域 -->
-    <div class="chart-container" id="main-chart">
-        <!-- <div class="chart-header">
-            <div>
-                <h1 class="chart-title">ECharts 图表配置器</h1>
-                <p class="chart-subtitle">实时配置并预览图表效果</p>
-            </div>
-            <div class="status-indicator">
-                <div class="status-dot"></div>
-                <span>实时更新中</span>
-            </div>
-        </div> -->
-
-        <!-- <div class="chart-wrapper">
-            <div id="main-chart"></div>
-        </div> -->
-    </div>
+    <div class="chart-container" id="main-chart"></div>
 
     <script>
         css = [];
         scripts = [
             webUrl + "chartx.js"
         ];
+        //当前配置
+        var currentConfig = null;
+        var currentOption = null;
+
         loadPage(function () {
             SN = " | 图表中心"
+            sectionSet();
+            renderChart();
 
+            
+
+        });
+
+        //配置面板设置
+        function sectionSet() {
             // 设置折叠面板
             document.querySelectorAll('.section-header').forEach(header => {
                 header.addEventListener('click', function () {
@@ -676,24 +712,37 @@
             });
             // 默认打开第一个
             document.querySelector('.section-header').click();
-            
+
             // 颜色预览
             document.querySelectorAll('input[type="text"][id$="color"]').forEach(input => {
-                input.addEventListener('input', function() {
+                input.addEventListener('input', function () {
                     const previewId = this.id.replace('color', 'preview');
                     document.getElementById(previewId).style.background = this.value;
                 });
             });
 
             // 字体大小滑块
-            document.getElementById('title-font-size').addEventListener('input', function() {
-                document.getElementById('font-size-value').textContent = this.value + 'px';
+            document.querySelectorAll('input[type="range"][id$="font-size"]').forEach(input => {
+                input.addEventListener('input', function () {
+                    const previewId = this.id+"-value";console.log(previewId);                    
+                    document.getElementById(previewId).textContent = this.value+ 'px';
+                });
             });
+            // 字体大小滑块
+            document.querySelectorAll('input[type="range"][id$="itemgap-size"]').forEach(input => {
+                input.addEventListener('input', function () {
+                    const previewId = this.id+"-value";console.log(previewId);                    
+                    document.getElementById(previewId).textContent = this.value+ 'px';
+                });
+            });
+            // document.getElementById('title-font-size').addEventListener('input', function () {
+            //     document.getElementById('font-size-value').textContent = this.value + 'px';
+            // });
 
-            // 坐标轴标签大小滑块
-            document.getElementById('axis-label-size').addEventListener('input', function() {
-                document.getElementById('axis-label-value').textContent = this.value + 'px';
-            });
+            // // 坐标轴标签大小滑块
+            // document.getElementById('axis-label-size').addEventListener('input', function () {
+            //     document.getElementById('axis-label-value').textContent = this.value + 'px';
+            // });
 
             // 折叠面板按钮
             document.getElementById('toggle-panel').addEventListener('click', function () {
@@ -703,13 +752,11 @@
                 const chartContainers = document.querySelectorAll('.chart-container');
                 chartContainers.forEach(container => {
                     // 添加新类
-                    container.classList.add('chart-container-expand');                    
+                    container.classList.add('chart-container-expand');
                     // 移除旧类
                     container.classList.remove('chart-container');
                 });
-                // $("#expand-panel").show();
-                // $(".chart-container").addClass("chart-container chart-container-expand");
-                // $(".chart-container-expand").removeClass("chart-container");
+                renderChart();
             });
 
             // 展开面板按钮
@@ -720,336 +767,397 @@
                 const chartContainers = document.querySelectorAll('.chart-container-expand');
                 chartContainers.forEach(container => {
                     // 添加新类
-                    container.classList.add('chart-container');                    
+                    container.classList.add('chart-container');
                     // 移除旧类
                     container.classList.remove('chart-container-expand');
                 });
-                // $("#expand-panel").hide();
-                // $(".chart-container-expand").addClass("chart-container chart-container-expand");
-                // $(".chart-container").removeClass("chart-container-expand");
+                renderChart();
             });
 
+            // 应用配置按钮
+            document.getElementById('apply-config').addEventListener('click',  function () {
+                renderChart();
+                console.log(currentConfig);
+                console.log(currentOption);
 
+                // 获取表单值
+                // currentConfig = {
+                    // chartType: document.getElementById('chart-type-select').value,
+                    // theme: document.getElementById('chart-theme').value,
+                    // animationType: document.getElementById('animation-type').value,
+                    // mainTitle: document.getElementById('main-title').value,
+                    // subTitle: document.getElementById('sub-title').value,
+                    // titleColor: document.getElementById('title-color').value,
+                    // titlePosition: document.getElementById('title-position').value,
+                    // titleFontSize: parseInt(document.getElementById('title-font-size').value),
+                    // xAxisData: document.getElementById('x-axis-data').value.split(',').map(item => item.trim()),
+                    // yAxisData: document.getElementById('y-axis-data').value.split(',').map(item => parseFloat(item.trim())) || 0,
+                    // dataColor: document.getElementById('data-color').value,
+                    // showDataLabels: document.getElementById('show-data-labels').value === 'true',
+                    // xAxisName: document.getElementById('x-axis-name').value,
+                    // yAxisName: document.getElementById('y-axis-name').value,
+                    // axisColor: document.getElementById('axis-color').value,
+                    // axisLabelSize: parseInt(document.getElementById('axis-label-size').value),
+                    // gridLines: document.getElementById('grid-lines').value === 'true',
+                    // showLegend: document.getElementById('show-legend').value === 'true',
+                    // legendPosition: document.getElementById('legend-position').value,
+                    // legendColor: document.getElementById('legend-color').value
+                // }
+            });
 
-
-
-            // // 初始化ECharts实例
-            // let chartDom = document.getElementById('main-chart');
-            // let myChart = echarts.init(chartDom);
-
-            // // 默认配置
-            // const defaultConfig = {
-            //     chartType: 'bar',
-            //     mainTitle: '销售数据统计',
-            //     subTitle: '2023年各季度数据',
-            //     titleColor: '#3498db',
-            //     titlePosition: 'center',
-            //     titleFontSize: 24,
-            //     xAxisData: ['第一季度', '第二季度', '第三季度', '第四季度'],
-            //     yAxisData: [120, 200, 150, 80],
-            //     dataColor: '#2ecc71',
-            //     showDataLabels: true,
-            //     xAxisName: '季度',
-            //     yAxisName: '销售额（万元）',
-            //     axisColor: '#e0e0e0',
-            //     axisLabelSize: 14,
-            //     gridLines: true,
-            //     showLegend: true,
-            //     legendPosition: 'top',
-            //     legendColor: '#f1c40f',
-            //     theme: 'default',
-            //     animationType: 'linear'
-            // };
-
-            // // 当前配置
-            // let currentConfig = {...defaultConfig};
-
-            // 初始化图表
-            // function initChart() {
-            // renderChart(currentConfig);
-            // bindEvents();
-            // setupAccordions();
-            // updateInputValues();
-            // }
-
-            // // 渲染图表
-            // function renderChart(config) {            
-            //     chartDom = document.getElementById('main-chart');
-            //     myChart = echarts.init(chartDom);
-            //     const option = {
-            //         title: {
-            //             text: config.mainTitle,
-            //             subtext: config.subTitle,
-            //             left: config.titlePosition,
-            //             textStyle: {
-            //                 color: config.titleColor,
-            //                 fontSize: config.titleFontSize
-            //             },
-            //             subtextStyle: {
-            //                 fontSize: config.titleFontSize - 4
-            //             }
-            //         },
-            //         tooltip: {
-            //             trigger: 'axis',
-            //             backgroundColor: 'rgba(0, 0, 0, 0.7)',
-            //             borderColor: '#333',
-            //             textStyle: {
-            //                 color: '#fff'
-            //             }
-            //         },
-            //         animation: true,
-            //         animationType: config.animationType,
-            //         animationDuration: 1000,
-            //         legend: {
-            //             show: config.showLegend,
-            //             data: ['销售额'],
-            //             textStyle: {
-            //                 color: config.legendColor
-            //             },
-            //             top: config.legendPosition === 'top' ? 30 : 
-            //                  config.legendPosition === 'bottom' ? 'bottom' : 
-            //                  config.legendPosition,
-            //             left: config.legendPosition === 'left' ? 'left' : 
-            //                   config.legendPosition === 'right' ? 'right' : 'center'
-            //         },
-            //         grid: {
-            //             left: '3%',
-            //             right: '4%',
-            //             bottom: '3%',
-            //             containLabel: true
-            //         },
-            //         xAxis: {
-            //             type: 'category',
-            //             data: config.xAxisData,
-            //             name: config.xAxisName,
-            //             nameTextStyle: {
-            //                 color: '#aaa'
-            //             },
-            //             axisLine: {
-            //                 lineStyle: {
-            //                     color: config.axisColor
-            //                 }
-            //             },
-            //             axisLabel: {
-            //                 color: '#aaa',
-            //                 fontSize: config.axisLabelSize
-            //             }
-            //         },
-            //         yAxis: {
-            //             type: 'value',
-            //             name: config.yAxisName,
-            //             nameTextStyle: {
-            //                 color: '#aaa'
-            //             },
-            //             axisLine: {
-            //                 lineStyle: {
-            //                     color: config.axisColor
-            //                 }
-            //             },
-            //             splitLine: {
-            //                 show: config.gridLines,
-            //                 lineStyle: {
-            //                     color: 'rgba(255, 255, 255, 0.1)'
-            //                 }
-            //             },
-            //             axisLabel: {
-            //                 color: '#aaa',
-            //                 fontSize: config.axisLabelSize
-            //             }
-            //         },
-            //         series: [
-            //             {
-            //                 name: '销售额',
-            //                 type: config.chartType,
-            //                 data: config.yAxisData,
-            //                 itemStyle: {
-            //                     color: config.dataColor
-            //                 },
-            //                 label: {
-            //                     show: config.showDataLabels,
-            //                     position: 'top',
-            //                     color: '#fff'
-            //                 }
-            //             }
-            //         ]
-            //     };
-
-            //     // 特殊图表类型处理
-            //     if (config.chartType === 'pie') {
-            //         option.series[0] = {
-            //             name: '销售额',
-            //             type: 'pie',
-            //             radius: '70%',
-            //             data: config.xAxisData.map((name, index) => ({
-            //                 name: name,
-            //                 value: config.yAxisData[index]
-            //             })),
-            //             itemStyle: {
-            //                 color: config.dataColor
-            //             },
-            //             label: {
-            //                 show: config.showDataLabels,
-            //                 color: '#fff'
-            //             },
-            //             emphasis: {
-            //                 itemStyle: {
-            //                     shadowBlur: 10,
-            //                     shadowOffsetX: 0,
-            //                     shadowColor: 'rgba(0, 0, 0, 0.5)'
-            //                 }
-            //             }
-            //         };
-
-            //         delete option.xAxis;
-            //         delete option.yAxis;
-            //     }
-
-            //     // 应用主题
-            //     if (config.theme !== 'default') {
-            //         echarts.dispose(myChart);
-            //         myChart = echarts.init(chartDom, config.theme);
-            //     }
-
-            //     myChart.setOption(option);
-            // }
-
-            // 绑定事件
-            // function bindEvents() {
-            // // 应用配置按钮
-            // document.getElementById('apply-config').addEventListener('click', applyConfig);
-
+            
             // // 重置配置按钮
-            // document.getElementById('reset-config').addEventListener('click', resetConfig);
-
-            // // 导出按钮
-            // document.getElementById('export-btn').addEventListener('click', exportChart);
-
-            // }
-
-            // // 应用配置
-            // function applyConfig() {
-            //     // 获取表单值
-            //     currentConfig = {
-            //         chartType: document.getElementById('chart-type-select').value,
-            //         theme: document.getElementById('chart-theme').value,
-            //         animationType: document.getElementById('animation-type').value,
-            //         mainTitle: document.getElementById('main-title').value,
-            //         subTitle: document.getElementById('sub-title').value,
-            //         titleColor: document.getElementById('title-color').value,
-            //         titlePosition: document.getElementById('title-position').value,
-            //         titleFontSize: parseInt(document.getElementById('title-font-size').value),
-            //         xAxisData: document.getElementById('x-axis-data').value.split(',').map(item => item.trim()),
-            //         yAxisData: document.getElementById('y-axis-data').value.split(',').map(item => parseFloat(item.trim())) || 0,
-            //         dataColor: document.getElementById('data-color').value,
-            //         showDataLabels: document.getElementById('show-data-labels').value === 'true',
-            //         xAxisName: document.getElementById('x-axis-name').value,
-            //         yAxisName: document.getElementById('y-axis-name').value,
-            //         axisColor: document.getElementById('axis-color').value,
-            //         axisLabelSize: parseInt(document.getElementById('axis-label-size').value),
-            //         gridLines: document.getElementById('grid-lines').value === 'true',
-            //         showLegend: document.getElementById('show-legend').value === 'true',
-            //         legendPosition: document.getElementById('legend-position').value,
-            //         legendColor: document.getElementById('legend-color').value
-            //     };
-
-            //     renderChart(currentConfig);
-
-            //     // 显示成功提示
-            //     showNotification('配置已成功应用!', 'success');
-            // }
-
-            // // 重置配置
-            // function resetConfig() {
-            //     currentConfig = {...defaultConfig};
-            //     updateInputValues();
-            //     renderChart(currentConfig);
-            //     showNotification('配置已重置为默认值!', 'success');
-            // }
-
-            // // 导出图表
-            // function exportChart() {
-            //     const url = myChart.getDataURL({
-            //         type: 'png',
-            //         pixelRatio: 2,
-            //         backgroundColor: '#252836'
-            //     });
-
-            //     const a = document.createElement('a');
-            //     a.href = url;
-            //     a.download = 'echarts-chart.png';
-            //     document.body.appendChild(a);
-            //     a.click();
-            //     document.body.removeChild(a);
-
-            //     showNotification('图表已导出为PNG图片!', 'success');
-            // }
-
-            // // 更新输入框值
-            // function updateInputValues() {
-            //     document.getElementById('chart-type-select').value = currentConfig.chartType;
-            //     document.getElementById('chart-theme').value = currentConfig.theme;
-            //     document.getElementById('animation-type').value = currentConfig.animationType;
-            //     document.getElementById('main-title').value = currentConfig.mainTitle;
-            //     document.getElementById('sub-title').value = currentConfig.subTitle;
-            //     document.getElementById('title-color').value = currentConfig.titleColor;
-            //     document.getElementById('title-position').value = currentConfig.titlePosition;
-            //     document.getElementById('title-font-size').value = currentConfig.titleFontSize;
-            //     document.getElementById('font-size-value').textContent = currentConfig.titleFontSize + 'px';
-            //     document.getElementById('x-axis-data').value = currentConfig.xAxisData.join(', ');
-            //     document.getElementById('y-axis-data').value = currentConfig.yAxisData.join(', ');
-            //     document.getElementById('data-color').value = currentConfig.dataColor;
-            //     document.getElementById('show-data-labels').value = currentConfig.showDataLabels;
-            //     document.getElementById('x-axis-name').value = currentConfig.xAxisName;
-            //     document.getElementById('y-axis-name').value = currentConfig.yAxisName;
-            //     document.getElementById('axis-color').value = currentConfig.axisColor;
-            //     document.getElementById('axis-label-size').value = currentConfig.axisLabelSize;
-            //     document.getElementById('axis-label-value').textContent = currentConfig.axisLabelSize + 'px';
-            //     document.getElementById('grid-lines').value = currentConfig.gridLines;
-            //     document.getElementById('show-legend').value = currentConfig.showLegend;
-            //     document.getElementById('legend-position').value = currentConfig.legendPosition;
-            //     document.getElementById('legend-color').value = currentConfig.legendColor;
-
-            //     // 更新颜色预览
-            //     document.getElementById('title-preview').style.background = currentConfig.titleColor;
-            //     document.getElementById('data-preview').style.background = currentConfig.dataColor;
-            //     document.getElementById('axis-preview').style.background = currentConfig.axisColor;
-            //     document.getElementById('legend-preview').style.background = currentConfig.legendColor;
-            // }
-
-            // // 显示通知
-            // function showNotification(message, type) {
-            //     const notif = document.createElement('div');
-            //     notif.className = `notification ${type}`;
-            //     notif.textContent = message;
-            //     notif.style.cssText = `
-            //         position: fixed;
-            //         top: 20px;
-            //         right: 20px;
-            //         padding: 15px 25px;
-            //         background: ${type === 'success' ? '#2ecc71' : '#e74c3c'};
-            //         color: white;
-            //         border-radius: 5px;
-            //         box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            //         z-index: 1000;
-            //         animation: slideIn 0.3s, fadeOut 0.5s 2.5s;
-            //     `;
-
-            //     document.body.appendChild(notif);
-
-            //     setTimeout(() => {
-            //         notif.remove();
-            //     }, 3000);
-            // }
-
-            // // 页面加载时初始化
-            // window.addEventListener('load', initChart);
-
-            // // 响应窗口大小变化
-            // window.addEventListener('resize', function() {
-            //     myChart.resize();
+            // document.getElementById('reset-config').addEventListener('click', function () {
+            //     // currentConfig = {...defaultConfig};
+            //     // updateInputValues();
+            //     // renderChart(currentConfig);
+            //     // showNotification('配置已重置为默认值!', 'success');
             // });
 
-        });
+            // // 导出按钮
+            // document.getElementById('export-btn').addEventListener('click', function () {
+            //     // const url = myChart.getDataURL({
+            //     //     type: 'png',
+            //     //     pixelRatio: 2,
+            //     //     backgroundColor: '#252836'
+            //     // });
+
+            //     // const a = document.createElement('a');
+            //     // a.href = url;
+            //     // a.download = 'echarts-chart.png';
+            //     // document.body.appendChild(a);
+            //     // a.click();
+            //     // document.body.removeChild(a);
+
+            //     // showNotification('图表已导出为PNG图片!', 'success');
+            // });
+        
+        }
+
+
+        /*
+        var echartsSetInfo = {
+            "epaths": {                                     //echarts脚本文件路径（可以多个）（格式:{版本名：路径}，如：{ 'echarts.5.5.0': 'public/echarts/echarts.5.5.0' ,……}）
+                'echarts.4.2.1': ePath + 'echarts.4.2.1',
+                'echarts.5.0.2': ePath + 'echarts.5.0.2',
+                'echarts.5.1.2': ePath + 'echarts.5.1.2',
+                'echarts.5.5.0': ePath + 'echarts.5.5.0'
+            },
+            "version": "5.5.0",                             //echarts版本
+            "eDivID": "",                                   //echarts展示所在div的ID
+            "setAPI": {                                     //获取echarts配置信息接口信息，格式：{ "url": "", "params": null, "type": "get", "IsAsync": true }
+                "url": "",                                  //api地址
+                "params": null,                             //api入参{}
+                "type": "post",                             // api请求类型（为空默认为post）
+                "IsAsync": true                             //api是否异步请求（为空默认为false）
+            },
+            "dataAPI": {                                    //获取echarts数据接口信息，格式：{ "url": "", "params": null, "type": "get", "IsAsync": true }
+                "url": "",                                  //api地址
+                "params": null,                             //api入参{}
+                "type": "post",                             //api请求类型（为空默认为post）
+                "IsAsync": true                             //api是否异步请求（为空默认为false）
+            },
+            "dNames": ['name', 'value'],                    //数据字段名称数组（如：['name', 'value', 'value1', 'value2']），第一个留给xAxis（默认）或yAxis（需在oCallback回调更改）
+            "snList": [],                                   //series.name数组（如：['示例1', '示例2', '示例3']）和echarts对象legend的data保持一致
+            "stList": []                                    //series.type数组（如：['bar', 'line', 'bar']）
+        }
+       */
+
+        function renderChart() {
+            echartsSetInfo.version=document.getElementById('chart-version-select').value;
+            echartsSetInfo.eDivID=document.getElementById('chart-divid').value;
+
+            showEcharts(
+                function(eSetInfo){
+                    eSetInfo.setAPI.url = chartxUrl + "template/base/1.json"
+                    eSetInfo.setAPI.type = "get"
+                    eSetInfo.dataAPI.url = chartxUrl + "data/bar/bar_1_data.json"
+                    eSetInfo.dataAPI.type = "get"
+                    eSetInfo.snList = []
+                    eSetInfo.dataAPI.url = chartxUrl + "data/bar/bar_1_data.json"
+                    eSetInfo.dNames = ['name', 'value']
+                    eSetInfo.stList = ['bar']
+                    eSetInfo.eDivID = "main-chart"
+
+                    currentConfig={...eSetInfo}
+                },
+                function (option) {
+                    option.title[0].show=document.getElementById('title-show').value;
+                    option.title[0].text=document.getElementById('main-title').value;
+                    option.title[0].subtext=document.getElementById('sub-title').value;
+                    option.title[0].left=document.getElementById('title-left').value;
+                    option.title[0].top=document.getElementById('title-top').value;
+                    option.title[0].textStyle.color=document.getElementById('title-color').value;
+                    option.title[0].textStyle.fontSize=parseInt(document.getElementById('title-font-size').value);
+                    option.title[0].textStyle.fontFamily=document.getElementById('title-font-family').value;
+                    option.title[0].subtextStyle.color=document.getElementById('sub-title-color').value;
+                    option.title[0].subtextStyle.fontSize=parseInt(document.getElementById('sub-title-font-size').value);
+                    option.title[0].subtextStyle.fontFamily=document.getElementById('sub-title-font-family').value;
+                    option.title[0].itemGap=parseInt(document.getElementById('title-itemgap-size').value);
+
+                    
+                    option.tooltip.formatter = "{b}<br/>示例1：{c0}"
+                    option.legend.show = false;
+
+                    currentOption={...option}
+                },
+                function (myChart) {
+                    myChart.on('click', (params) => {
+                        console.log(params);
+                        alert(params.name + "\r\n" + params.value)
+                    })
+                }
+            )
+        }
+        // // 初始化ECharts实例
+        // let chartDom = document.getElementById('main-chart');
+        // let myChart = echarts.init(chartDom);
+
+        // // 默认配置
+        // const defaultConfig = {
+        //     chartType: 'bar',
+        //     mainTitle: '销售数据统计',
+        //     subTitle: '2023年各季度数据',
+        //     titleColor: '#3498db',
+        //     titlePosition: 'center',
+        //     titleFontSize: 24,
+        //     xAxisData: ['第一季度', '第二季度', '第三季度', '第四季度'],
+        //     yAxisData: [120, 200, 150, 80],
+        //     dataColor: '#2ecc71',
+        //     showDataLabels: true,
+        //     xAxisName: '季度',
+        //     yAxisName: '销售额（万元）',
+        //     axisColor: '#e0e0e0',
+        //     axisLabelSize: 14,
+        //     gridLines: true,
+        //     showLegend: true,
+        //     legendPosition: 'top',
+        //     legendColor: '#f1c40f',
+        //     theme: 'default',
+        //     animationType: 'linear'
+        // };
+
+        // // 当前配置
+        // let currentConfig = {...defaultConfig};
+
+        // 初始化图表
+        // function initChart() {
+        // renderChart(currentConfig);
+        // bindEvents();
+        // setupAccordions();
+        // updateInputValues();
+        // }
+
+        // // 渲染图表
+        // function renderChart(config) {
+        //     chartDom = document.getElementById('main-chart');
+        //     myChart = echarts.init(chartDom);
+        //     const option = {
+        //         title: {
+        //             text: config.mainTitle,
+        //             subtext: config.subTitle,
+        //             left: config.titlePosition,
+        //             textStyle: {
+        //                 color: config.titleColor,
+        //                 fontSize: config.titleFontSize
+        //             },
+        //             subtextStyle: {
+        //                 fontSize: config.titleFontSize - 4
+        //             }
+        //         },
+        //         tooltip: {
+        //             trigger: 'axis',
+        //             backgroundColor: 'rgba(0, 0, 0, 0.7)',
+        //             borderColor: '#333',
+        //             textStyle: {
+        //                 color: '#fff'
+        //             }
+        //         },
+        //         animation: true,
+        //         animationType: config.animationType,
+        //         animationDuration: 1000,
+        //         legend: {
+        //             show: config.showLegend,
+        //             data: ['销售额'],
+        //             textStyle: {
+        //                 color: config.legendColor
+        //             },
+        //             top: config.legendPosition === 'top' ? 30 :
+        //                  config.legendPosition === 'bottom' ? 'bottom' :
+        //                  config.legendPosition,
+        //             left: config.legendPosition === 'left' ? 'left' :
+        //                   config.legendPosition === 'right' ? 'right' : 'center'
+        //         },
+        //         grid: {
+        //             left: '3%',
+        //             right: '4%',
+        //             bottom: '3%',
+        //             containLabel: true
+        //         },
+        //         xAxis: {
+        //             type: 'category',
+        //             data: config.xAxisData,
+        //             name: config.xAxisName,
+        //             nameTextStyle: {
+        //                 color: '#aaa'
+        //             },
+        //             axisLine: {
+        //                 lineStyle: {
+        //                     color: config.axisColor
+        //                 }
+        //             },
+        //             axisLabel: {
+        //                 color: '#aaa',
+        //                 fontSize: config.axisLabelSize
+        //             }
+        //         },
+        //         yAxis: {
+        //             type: 'value',
+        //             name: config.yAxisName,
+        //             nameTextStyle: {
+        //                 color: '#aaa'
+        //             },
+        //             axisLine: {
+        //                 lineStyle: {
+        //                     color: config.axisColor
+        //                 }
+        //             },
+        //             splitLine: {
+        //                 show: config.gridLines,
+        //                 lineStyle: {
+        //                     color: 'rgba(255, 255, 255, 0.1)'
+        //                 }
+        //             },
+        //             axisLabel: {
+        //                 color: '#aaa',
+        //                 fontSize: config.axisLabelSize
+        //             }
+        //         },
+        //         series: [
+        //             {
+        //                 name: '销售额',
+        //                 type: config.chartType,
+        //                 data: config.yAxisData,
+        //                 itemStyle: {
+        //                     color: config.dataColor
+        //                 },
+        //                 label: {
+        //                     show: config.showDataLabels,
+        //                     position: 'top',
+        //                     color: '#fff'
+        //                 }
+        //             }
+        //         ]
+        //     };
+
+        //     // 特殊图表类型处理
+        //     if (config.chartType === 'pie') {
+        //         option.series[0] = {
+        //             name: '销售额',
+        //             type: 'pie',
+        //             radius: '70%',
+        //             data: config.xAxisData.map((name, index) => ({
+        //                 name: name,
+        //                 value: config.yAxisData[index]
+        //             })),
+        //             itemStyle: {
+        //                 color: config.dataColor
+        //             },
+        //             label: {
+        //                 show: config.showDataLabels,
+        //                 color: '#fff'
+        //             },
+        //             emphasis: {
+        //                 itemStyle: {
+        //                     shadowBlur: 10,
+        //                     shadowOffsetX: 0,
+        //                     shadowColor: 'rgba(0, 0, 0, 0.5)'
+        //                 }
+        //             }
+        //         };
+
+        //         delete option.xAxis;
+        //         delete option.yAxis;
+        //     }
+
+        //     // 应用主题
+        //     if (config.theme !== 'default') {
+        //         echarts.dispose(myChart);
+        //         myChart = echarts.init(chartDom, config.theme);
+        //     }
+
+        //     myChart.setOption(option);
+        // }
+
+
+        // }
+
+        
+
+        // // 更新输入框值
+        // function updateInputValues() {
+        //     document.getElementById('chart-type-select').value = currentConfig.chartType;
+        //     document.getElementById('chart-theme').value = currentConfig.theme;
+        //     document.getElementById('animation-type').value = currentConfig.animationType;
+        //     document.getElementById('main-title').value = currentConfig.mainTitle;
+        //     document.getElementById('sub-title').value = currentConfig.subTitle;
+        //     document.getElementById('title-color').value = currentConfig.titleColor;
+        //     document.getElementById('title-position').value = currentConfig.titlePosition;
+        //     document.getElementById('title-font-size').value = currentConfig.titleFontSize;
+        //     document.getElementById('font-size-value').textContent = currentConfig.titleFontSize + 'px';
+        //     document.getElementById('x-axis-data').value = currentConfig.xAxisData.join(', ');
+        //     document.getElementById('y-axis-data').value = currentConfig.yAxisData.join(', ');
+        //     document.getElementById('data-color').value = currentConfig.dataColor;
+        //     document.getElementById('show-data-labels').value = currentConfig.showDataLabels;
+        //     document.getElementById('x-axis-name').value = currentConfig.xAxisName;
+        //     document.getElementById('y-axis-name').value = currentConfig.yAxisName;
+        //     document.getElementById('axis-color').value = currentConfig.axisColor;
+        //     document.getElementById('axis-label-size').value = currentConfig.axisLabelSize;
+        //     document.getElementById('axis-label-value').textContent = currentConfig.axisLabelSize + 'px';
+        //     document.getElementById('grid-lines').value = currentConfig.gridLines;
+        //     document.getElementById('show-legend').value = currentConfig.showLegend;
+        //     document.getElementById('legend-position').value = currentConfig.legendPosition;
+        //     document.getElementById('legend-color').value = currentConfig.legendColor;
+
+        //     // 更新颜色预览
+        //     document.getElementById('title-preview').style.background = currentConfig.titleColor;
+        //     document.getElementById('data-preview').style.background = currentConfig.dataColor;
+        //     document.getElementById('axis-preview').style.background = currentConfig.axisColor;
+        //     document.getElementById('legend-preview').style.background = currentConfig.legendColor;
+        // }
+
+        // // 显示通知
+        // function showNotification(message, type) {
+        //     const notif = document.createElement('div');
+        //     notif.className = `notification ${type}`;
+        //     notif.textContent = message;
+        //     notif.style.cssText = `
+        //         position: fixed;
+        //         top: 20px;
+        //         right: 20px;
+        //         padding: 15px 25px;
+        //         background: ${type === 'success' ? '#2ecc71' : '#e74c3c'};
+        //         color: white;
+        //         border-radius: 5px;
+        //         box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        //         z-index: 1000;
+        //         animation: slideIn 0.3s, fadeOut 0.5s 2.5s;
+        //     `;
+
+        //     document.body.appendChild(notif);
+
+        //     setTimeout(() => {
+        //         notif.remove();
+        //     }, 3000);
+        // }
+
+        // // 页面加载时初始化
+        // window.addEventListener('load', initChart);
+
+        // // 响应窗口大小变化
+        // window.addEventListener('resize', function() {
+        //     myChart.resize();
+        // });
     </script>
 </body>
 

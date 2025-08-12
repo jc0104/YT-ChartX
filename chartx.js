@@ -7,12 +7,12 @@ chartxUrl = (IsNull(chartxUrl) == "" ? webUrl : chartxUrl)
 var ePath = chartxUrl + 'echarts/';
 var echartsSetInfo = {
     "epaths": {
-        'echarts.4.2.1': ePath + 'echarts.4.2.1',
         'echarts.5.0.2': ePath + 'echarts.5.0.2',
         'echarts.5.1.2': ePath + 'echarts.5.1.2',
-        'echarts.5.5.0': ePath + 'echarts.5.5.0'
+        'echarts.5.5.0': ePath + 'echarts.5.5.0',
+        'echarts.6.0.0': ePath + 'echarts.6.0.0'
     },
-    "version": "5.5.0",
+    "version": "6.0.0",
     "eDivID": "",
     "setAPI": { "url": "", "params": null, "type": "post", "IsAsync": true },
     "dataAPI": { "url": "", "params": null, "type": "post", "IsAsync": true },
@@ -106,40 +106,49 @@ var echartsSetInfo = {
 //----------------------------------------------------------------------------------------------------------------------------------------------------
 //调用入口
 /*  
-    echarts,    echarts对象
-    echartsSetInfo
-        version，   echarts版本
-        epaths,     echarts脚本文件路径（可以多个）（格式:{版本名：路径}，如：{ 'echarts.5.5.0': 'public/echarts/echarts.5.5.0' ,……}）
-        eDivID,     echarts展示所在div的ID
-        setAPI,     获取echarts配置信息接口信息，格式：{ "url": "", "params": null, "type": "get", "IsAsync": true }
-            url     api地址
-            params  api入参{}
-            type    api请求类型（为空默认为post）
-            IsAsync api是否异步请求（为空默认为false）
-        dataAPI,    获取echarts数据接口信息，格式：{ "url": "", "params": null, "type": "get", "IsAsync": true }
-            url     api地址
-            params  api入参{}
-            type    api请求类型（为空默认为post）
-            IsAsync api是否异步请求（为空默认为false）
-        dNames,     数据字段名称数组（如：['name', 'value', 'value1', 'value2']），
-                    第一个留给xAxis（默认）或yAxis（需要在oCallback回调方法更改）
-        snList      series.name数组（如：['示例1', '示例2', '示例3']）和echarts对象legend的data保持一致
-        stList,     series.type数组（如：['bar', 'line', 'bar']）
+    iCakkback,  echartsSetInfo赋值的回调方法 （多用于对echartsSetInfo中的各个属性进行补充扩展），echartsSetInfo具体属性如下：
+        var echartsSetInfo = {
+            "epaths": {                                     //echarts脚本文件路径（可以多个）（格式:{版本名：路径}，如：{ 'echarts.5.5.0': 'public/echarts/echarts.5.5.0' ,……}）
+                'echarts.4.2.1': ePath + 'echarts.4.2.1',
+                'echarts.5.0.2': ePath + 'echarts.5.0.2',
+                'echarts.5.1.2': ePath + 'echarts.5.1.2',
+                'echarts.5.5.0': ePath + 'echarts.5.5.0'
+            },
+            "version": "5.5.0",                             //echarts版本
+            "eDivID": "",                                   //echarts展示所在div的ID
+            "setAPI": {                                     //获取echarts配置信息接口信息，格式：{ "url": "", "params": null, "type": "get", "IsAsync": true }
+                "url": "",                                  //api地址
+                "params": null,                             //api入参{}
+                "type": "post",                             // api请求类型（为空默认为post）
+                "IsAsync": true                             //api是否异步请求（为空默认为false）
+            },
+            "dataAPI": {                                    //获取echarts数据接口信息，格式：{ "url": "", "params": null, "type": "get", "IsAsync": true }
+                "url": "",                                  //api地址
+                "params": null,                             //api入参{}
+                "type": "post",                             //api请求类型（为空默认为post）
+                "IsAsync": true                             //api是否异步请求（为空默认为false）
+            },
+            "dNames": ['name', 'value'],                    //数据字段名称数组（如：['name', 'value', 'value1', 'value2']），第一个留给xAxis（默认）或yAxis（需在oCallback回调更改）
+            "snList": [],                                   //series.name数组（如：['示例1', '示例2', '示例3']）和echarts对象legend的data保持一致
+            "stList": []                                    //series.type数组（如：['bar', 'line', 'bar']）
+        }
     oCallback,  option赋值完后的回调方法 （多用于对option中的各个属性进行补充扩展）
     eCallback   echarts对象加载完后的回调方法（多用于对myChart的补充扩展，例如添加点击事件）
 */
-var showEcharts = function (echartsSetInfo, oCallback, eCallback) {
+var showEcharts = function (iCakkback, oCallback, eCallback) {
     try {
-        var version = echartsSetInfo.version;
-        var epaths = echartsSetInfo.epaths;
-        var eDivID = echartsSetInfo.eDivID;
+        var eSetInfo = JSON.parse(JSON.stringify(echartsSetInfo));
+        if (typeof iCakkback === 'function') iCakkback(eSetInfo);
+        var version = eSetInfo.version;
+        var epaths = eSetInfo.epaths;
+        var eDivID = eSetInfo.eDivID;
 
-        var setAPI = echartsSetInfo.setAPI;
-        var dataAPI = echartsSetInfo.dataAPI;
+        var setAPI = eSetInfo.setAPI;
+        var dataAPI = eSetInfo.dataAPI;
 
-        var dNames = echartsSetInfo.dNames;
-        var snList = echartsSetInfo.snList;
-        var stList = echartsSetInfo.stList;
+        var dNames = eSetInfo.dNames;
+        var snList = eSetInfo.snList;
+        var stList = eSetInfo.stList;
 
         require.config({
             paths: epaths
@@ -195,12 +204,15 @@ var showEcharts = function (echartsSetInfo, oCallback, eCallback) {
 
                     console.log(option);
 
-                    var myChart = echarts.init(document.getElementById(eDivID));
+                    var chartDom = document.getElementById(eDivID);
+                    chartDom.style.position = '';
+                    var myChart = echarts.init(chartDom);
                     myChart.dispose();
                     myChart.clear();
-                    myChart = echarts.init(document.getElementById(eDivID));
+                    myChart = echarts.init(chartDom);
                     myChart.setOption(option, true);
-
+                    
+                    
                     if (typeof eCallback === 'function') eCallback(myChart);
 
                     $(window).resize(function () {
@@ -254,15 +266,17 @@ var getEchartsData = function name(dataAPI, setData, callback) {
     });
 }
 /* 调用示例
-showEcharts({
-        "epaths": { 'echarts.5.5.0': webUrl + 'public/echarts/echarts.5.5.0' },
-        "version": "5.5.0",
-        "eDivID": "eDiv1",
-        "setAPI": { "url": webUrl + "data/echarts/base/1.json", "params": null, "type": "get", "IsAsync": true },
-        "dataAPI": { "url": webUrl + "data/echarts/data/bar/bar_1_data.json", "params": null, "type": "get", "IsAsync": true },
-        "dNames": ['name', 'value'],
-        "snList": [],
-        "stList": ['bar']
+showEcharts(
+    function(eSetInfo){
+        eSetInfo.setAPI.url = chartxUrl + "template/base/1.json"
+        eSetInfo.setAPI.type = "get"
+        eSetInfo.dataAPI.url = chartxUrl + "data/bar/bar_1_data.json"
+        eSetInfo.dataAPI.type = "get"
+        eSetInfo.snList = []
+        eSetInfo.dataAPI.url = chartxUrl + "data/bar/bar_1_data.json"
+        eSetInfo.dNames = ['name', 'value']
+        eSetInfo.stList = ['bar']
+        eSetInfo.eDivID = "main-chart"
     },
     function (option) {
         option.xAxis[0].show = true

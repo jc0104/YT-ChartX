@@ -2,6 +2,7 @@
   "readme": "基础图表（饼图pie）",
   "title": [
     {
+      "show":true,
       "text": "",
       "subtext": "",
       "left": "left",
@@ -10,7 +11,13 @@
         "color": "#ffffff",
         "fontSize": 20,
         "fontFamily": "PingfangRegular"
-      }
+      },
+      "subtextStyle": {
+          "color": "#ffffff",
+          "fontSize": 20,
+          "fontFamily": "PingfangRegular"
+      },
+      "itemGap":1
     }
   ],
   "tooltip": {

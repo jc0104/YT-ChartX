@@ -27,15 +27,16 @@
     loadPage(function () {
         echartsSetInfo.setAPI.url = chartxUrl + "template/base/1.json"
         echartsSetInfo.setAPI.type = "get"
-        echartsSetInfo.dataAPI.url = chartxUrl + "data/bar/bar_1_data.json"
         echartsSetInfo.dataAPI.type = "get"
         echartsSetInfo.dNames = ['name', 'value']
         echartsSetInfo.snList = []
-        echartsSetInfo.stList = ['bar']
-        echartsSetInfo.eDivID = "eDiv1"
 
-        var eSetInfo1 = JSON.parse(JSON.stringify(echartsSetInfo));
-        showEcharts(eSetInfo1,
+        showEcharts(
+            function(eSetInfo){
+                eSetInfo.dataAPI.url = chartxUrl + "data/bar/bar_1_data.json"
+                eSetInfo.stList = ['bar']
+                eSetInfo.eDivID = "eDiv1"
+            },
             function (option) {
                 option.tooltip.formatter = "{b}<br/>示例1：{c0}"
                 option.legend.show = false;
@@ -49,13 +50,13 @@
         )
 
 
-
-        var eSetInfo2 = JSON.parse(JSON.stringify(echartsSetInfo));
-        eSetInfo2.version = "5.1.2"
-        eSetInfo2.dataAPI.url = webUrl + "data/line/line_1_data.json"
-        eSetInfo2.stList = ['line']
-        eSetInfo2.eDivID = "eDiv2"
-        showEcharts(eSetInfo2,
+        showEcharts(
+            function(eSetInfo){
+                eSetInfo.version = "5.1.2"
+                eSetInfo.dataAPI.url = webUrl + "data/line/line_1_data.json"
+                eSetInfo.stList = ['line']
+                eSetInfo.eDivID = "eDiv2"
+            },
             function (option) {
                 option.tooltip.formatter = "{b}<br/>示例1：{c0}"
                 option.legend.show = false;
@@ -71,13 +72,14 @@
 
 
 
-        var eSetInfo3 = JSON.parse(JSON.stringify(echartsSetInfo));
-        eSetInfo3.dataAPI.url = webUrl + "data/base/base_1_data.json"
-        eSetInfo3.dNames = ['name', 'value', 'value1', 'value2']
-        eSetInfo3.snList = ['示例1', '示例2', '示例3']
-        eSetInfo3.stList = ['bar', 'line', 'bar']
-        eSetInfo3.eDivID = "eDiv3"
-        showEcharts(eSetInfo3,
+        showEcharts(
+            function(eSetInfo){
+                eSetInfo.dataAPI.url = webUrl + "data/base/base_1_data.json"
+                eSetInfo.dNames = ['name', 'value', 'value1', 'value2']
+                eSetInfo.snList = ['示例1', '示例2', '示例3']
+                eSetInfo.stList = ['bar', 'line', 'bar']
+                eSetInfo.eDivID = "eDiv3"
+            },
             function (option) {
                 option.tooltip.formatter = "{b}<br/>{a0}：{c0}<br/>{a1}：{c1}<br/>{a2}：{c2}"
                 option.series[1].areaStyle = null
@@ -97,12 +99,13 @@
 
 
 
-        var eSetInfo4 = JSON.parse(JSON.stringify(echartsSetInfo));
-        eSetInfo4.setAPI.url = webUrl + "template/base/2.json"
-        eSetInfo4.dataAPI.url = webUrl + "data/pie/pie_1_data.json"
-        eSetInfo4.stList = ['pie']
-        eSetInfo4.eDivID = "eDiv4"
-        showEcharts(eSetInfo4,
+        showEcharts(
+            function(eSetInfo){
+                eSetInfo.setAPI.url = webUrl + "template/base/2.json"
+                eSetInfo.dataAPI.url = webUrl + "data/pie/pie_1_data.json"
+                eSetInfo.stList = ['pie']
+                eSetInfo.eDivID = "eDiv4"
+            },
             function (option) {
                 option.tooltip.formatter = "{b}<br/>示例1：{c0}"
             },
@@ -116,12 +119,13 @@
 
 
 
-        var eSetInfo5 = JSON.parse(JSON.stringify(echartsSetInfo));
-        eSetInfo5.setAPI.url = webUrl + "template/base/2.json"
-        eSetInfo5.dataAPI.url = webUrl + "data/pie/pie_1_data.json"
-        eSetInfo5.stList = ['pie']
-        eSetInfo5.eDivID = "eDiv5"
-        showEcharts(eSetInfo5,
+        showEcharts(
+            function(eSetInfo){
+                eSetInfo.setAPI.url = webUrl + "template/base/2.json"
+                eSetInfo.dataAPI.url = webUrl + "data/pie/pie_1_data.json"
+                eSetInfo.stList = ['pie']
+                eSetInfo.eDivID = "eDiv5"
+            },
             function (option) {
                 option.tooltip.formatter = "{b}<br/>示例1：{c0}"
             },

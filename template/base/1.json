@@ -2,6 +2,7 @@
     "readme": "基础图表（柱状图bar、折线图line）",
     "title": [
         {
+            "show":"",
             "text": "",
             "subtext": "",
             "left": "center",
@@ -10,7 +11,13 @@
                 "color": "#ffffff",
                 "fontSize": 20,
                 "fontFamily": "PingfangRegular"
-            }
+            },
+            "subtextStyle": {
+                "color": "#ffffff",
+                "fontSize": 20,
+                "fontFamily": "PingfangRegular"
+            },
+            "itemGap":1
         }
     ],
     "tooltip": {
