@@ -1,5 +1,5 @@
 {
-    "readme": "基础图表（柱状图bar、折线图line）",
+    "readme": "基础图表（柱状图bar、折线图line、饼图pie）",
     "title": [
         {
             "show":"",
@@ -87,7 +87,20 @@
             "type": "category",
             "data": [],
             "boundaryGap": true,
+            "nameTextStyle":{
+              "color": "#01eef3",
+              "fontSize": 20,
+              "fontFamily": "PingfangRegular"
+            },
+            "splitLine": {
+                "lineStyle": {
+                    "type": "dashed",
+                    "color": "#1a2933"
+                },
+                "show": false
+            },
             "axisLine": {
+                "show":true,
                 "lineStyle": {
                     "color": "#01eef3",
                     "width": 1
@@ -106,6 +119,11 @@
     "yAxis": [
         {
             "type": "value",
+            "nameTextStyle":{
+              "color": "#01eef3",
+              "fontSize": 20,
+              "fontFamily": "PingfangRegular"
+            },
             "splitLine": {
                 "lineStyle": {
                     "type": "dashed",
@@ -114,6 +132,7 @@
                 "show": true
             },
             "axisLine": {
+                "show":false,
                 "lineStyle": {
                     "color": "#01eef3",
                     "width": 1
@@ -134,10 +153,6 @@
             "name": "",
             "data": [],
             "type": "",
-            "smooth": true,
-            "areaStyle": {},
-            "symbolSize": 20,
-            "barWidth": 40,
             "label": {
                 "show": true,
                 "position": "top",
@@ -146,10 +161,34 @@
                     "fontSize": 20,
                     "fontFamily": "PingfangRegular"
                 }
+            },            
+            "itemStyle": {
+                "borderRadius": 5,
+                "borderColor": "#001e4a",
+                "borderWidth": 0
             },
-            "lineStyle": {
-                "width": 5
-            }
+            "labelLine": {
+                "show": false,
+                "length": 100,
+                "length2": 100,
+                "smooth": 0.2,
+                "lineStyle": {
+                    "width": 3
+                }
+            },
+            
+            "padAngle": 1.4,
+            "radius": ["40%","70%"],
+            "avoidLabelOverlap": true,
+
+            "smooth": true,
+            "areaStyle": {
+                "color":""
+            },
+            "symbol":"none",
+            "symbolSize": 20,
+
+            "barWidth": 40
         }
     ],
     "color": [
