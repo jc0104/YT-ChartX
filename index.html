@@ -1159,6 +1159,11 @@
     <div class="chart-container" id="main-chart"></div>
 
     <script>
+        
+        if(host.split(":")[0]!="127.0.0.1"){
+            webUrl+="YT-ChartX/"
+        }
+
         css = [];
         scripts = [
             webUrl + "chartx.js"
