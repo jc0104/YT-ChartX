@@ -1,0 +1,490 @@
+[
+    {
+        "id":1,
+        "name":"测试报表",
+        "currentConfig":{
+            "epaths": {
+                "echarts.5.0.2": "https://127.0.0.1:5589/echarts/echarts.5.0.2",
+                "echarts.5.1.2": "https://127.0.0.1:5589/echarts/echarts.5.1.2",
+                "echarts.5.5.0": "https://127.0.0.1:5589/echarts/echarts.5.5.0",
+                "echarts.6.0.0": "https://127.0.0.1:5589/echarts/echarts.6.0.0"
+            },
+            "version": "6.0.0",
+            "eDivID": "main-chart",
+            "setAPI": {
+                "url": "https://127.0.0.1:5589/template/base/1.json",
+                "params": null,
+                "type": "get",
+                "IsAsync": true
+            },
+            "dataAPI": {
+                "url": "https://127.0.0.1:5589/data/base/base_1_data.json",
+                "params": null,
+                "type": "get",
+                "IsAsync": true
+            },
+            "dNames": [
+                "name",
+                "value1"
+            ],
+            "snList": [],
+            "stList": [
+                "bar"
+            ]
+        },
+        "currentOption":{
+            "readme": "基础（柱状图bar、折线图line、饼图pie、散点图scatter、漏斗图funnel）图表",
+            "title": [
+                {
+                    "show": "true",
+                    "text": "主标题",
+                    "subtext": "副标题",
+                    "left": "center",
+                    "top": "top",
+                    "textStyle": {
+                        "color": "#3498db",
+                        "fontSize": 24,
+                        "fontFamily": "PingfangRegular"
+                    },
+                    "subtextStyle": {
+                        "color": "#3498db",
+                        "fontSize": 12,
+                        "fontFamily": "PingfangRegular"
+                    },
+                    "itemGap": 10
+                }
+            ],
+            "tooltip": {
+                "trigger": "axis",
+                "backgroundColor": "rgba(0, 0, 0, 0.5)",
+                "borderColor": "#ffffff",
+                "padding": [
+                    "5",
+                    "10",
+                    "5",
+                    "10"
+                ],
+                "textStyle": {
+                    "color": "#ffffff",
+                    "fontFamily": "PingfangRegular",
+                    "fontSize": 20
+                },
+                "axisPointer": {
+                    "type": "cross",
+                    "label": {
+                        "backgroundColor": "transparent",
+                        "borderColor": "#aaa",
+                        "borderWidth": 0,
+                        "color": "#ffffff",
+                        "fontSize": 20,
+                        "fontFamily": "PingfangRegular"
+                    },
+                    "lineStyle": {
+                        "type": "dashed",
+                        "color": "#999",
+                        "width": 1,
+                        "opacity": 0.5
+                    }
+                },
+                "formatter": "{b}<br/>示例1：{c0}",
+                "show": "true"
+            },
+            "legend": [
+                {
+                    "show": "true",
+                    "orient": "horizontal",
+                    "data": [
+                        "01",
+                        "02",
+                        "03",
+                        "04",
+                        "05",
+                        "06",
+                        "07",
+                        "08",
+                        "09"
+                    ],
+                    "left": "left",
+                    "top": "top",
+                    "align": "auto",
+                    "textStyle": {
+                        "color": "#01eef3",
+                        "fontSize": 14,
+                        "fontFamily": "PingfangRegular"
+                    }
+                }
+            ],
+            "grid": [
+                {
+                    "show": "true",
+                    "top": 60,
+                    "bottom": 60,
+                    "right": 80,
+                    "left": 30,
+                    "borderWidth": 0
+                }
+            ],
+            "xAxis": [
+                {
+                    "type": "category",
+                    "data": [
+                        "01",
+                        "02",
+                        "03",
+                        "04",
+                        "05",
+                        "06",
+                        "07",
+                        "08",
+                        "09"
+                    ],
+                    "boundaryGap": "true",
+                    "nameTextStyle": {
+                        "color": "#01eef3",
+                        "fontSize": 14,
+                        "fontFamily": "PingfangRegular"
+                    },
+                    "splitLine": {
+                        "lineStyle": {
+                            "type": "solid",
+                            "color": "#1a2933"
+                        },
+                        "show": "true"
+                    },
+                    "axisLine": {
+                        "show": "true",
+                        "lineStyle": {
+                            "color": "#01eef3",
+                            "width": 1
+                        }
+                    },
+                    "axisLabel": {
+                        "show": "true",
+                        "textStyle": {
+                            "color": "#01eef3",
+                            "fontSize": 14,
+                            "fontFamily": "PingfangRegular"
+                        }
+                    },
+                    "name": "季度"
+                }
+            ],
+            "yAxis": [
+                {
+                    "type": "value",
+                    "nameTextStyle": {
+                        "color": "#01eef3",
+                        "fontSize": 14,
+                        "fontFamily": "PingfangRegular"
+                    },
+                    "splitLine": {
+                        "lineStyle": {
+                            "type": "solid",
+                            "color": "#1a2933"
+                        },
+                        "show": "true"
+                    },
+                    "axisLine": {
+                        "show": "true",
+                        "lineStyle": {
+                            "color": "#01eef3",
+                            "width": 1
+                        }
+                    },
+                    "axisLabel": {
+                        "show": "true",
+                        "textStyle": {
+                            "color": "#01eef3",
+                            "fontSize": 14,
+                            "fontFamily": "PingfangRegular"
+                        }
+                    },
+                    "name": "销售额（万元）"
+                }
+            ],
+            "series": [
+                {
+                    "name": "",
+                    "data": [
+                        "10",
+                        "20",
+                        "30",
+                        "40",
+                        "45",
+                        "60",
+                        "70",
+                        "40",
+                        "90"
+                    ],
+                    "type": "bar",
+                    "label": {
+                        "show": "true",
+                        "position": "top",
+                        "textStyle": {
+                            "color": "#01eef3",
+                            "fontSize": 14,
+                            "fontFamily": "PingfangRegular"
+                        }
+                    },
+                    "itemStyle": {
+                        "borderRadius": 5,
+                        "borderColor": "#001e4a",
+                        "borderWidth": 0
+                    },
+                    "labelLine": {
+                        "show": "true",
+                        "length": 10,
+                        "length2": 10,
+                        "smooth": 0.2,
+                        "lineStyle": {
+                            "width": 3
+                        }
+                    },
+                    "padAngle": 1.4,
+                    "radius": [
+                        "40%",
+                        "70%"
+                    ],
+                    "avoidLabelOverlap": "true",
+                    "smooth": "true",
+                    "areaStyle": {
+                        "color": "rgba(255,255,255,0)"
+                    },
+                    "symbol": "circle",
+                    "symbolSize": 20,
+                    "barWidth": 40
+                }
+            ],
+            "color": [
+                "#5470c6",
+                "#91cc75",
+                "#fac858",
+                "#ee6666",
+                "#73c0de",
+                "#3ba272",
+                "#fc8452",
+                "#9a60b4",
+                "#ea7ccc",
+                "#80FFA5",
+                "#00DDFF",
+                "#37A2FF",
+                "#FF0087",
+                "#FFBF00"
+            ],
+            "version": "ECharts.6.0.0"
+        }
+    },
+     {
+        "id":2,
+        "name":"测试报表2",
+        "currentConfig":{
+            "epaths": {
+                "echarts.5.0.2": "https://127.0.0.1:5589/echarts/echarts.5.0.2",
+                "echarts.5.1.2": "https://127.0.0.1:5589/echarts/echarts.5.1.2",
+                "echarts.5.5.0": "https://127.0.0.1:5589/echarts/echarts.5.5.0",
+                "echarts.6.0.0": "https://127.0.0.1:5589/echarts/echarts.6.0.0"
+            },
+            "version": "5.5.0",
+            "eDivID": "main-chart",
+            "setAPI": {
+                "url": "https://127.0.0.1:5589/template/base/1.json",
+                "params": null,
+                "type": "get",
+                "IsAsync": true
+            },
+            "dataAPI": {
+                "url": "https://127.0.0.1:5589/data/base/base_1_data.json",
+                "params": null,
+                "type": "get",
+                "IsAsync": true
+            },
+            "dNames": [
+                "name",
+                "value1"
+            ],
+            "snList": [],
+            "stList": [
+                "pie"
+            ]
+        },
+        "currentOption":{
+            "readme": "基础（柱状图bar、折线图line、饼图pie、散点图scatter、漏斗图funnel）图表",
+            "title": [
+                {
+                    "show": "",
+                    "text": "主标题",
+                    "subtext": "副标题",
+                    "left": "center",
+                    "top": "top",
+                    "textStyle": {
+                        "color": "#3498db",
+                        "fontSize": 24,
+                        "fontFamily": "PingfangRegular"
+                    },
+                    "subtextStyle": {
+                        "color": "#3498db",
+                        "fontSize": 12,
+                        "fontFamily": "PingfangRegular"
+                    },
+                    "itemGap": 10
+                }
+            ],
+            "tooltip": {
+                "trigger": "item",
+                "backgroundColor": "rgba(0, 0, 0, 0.5)",
+                "borderColor": "#ffffff",
+                "padding": [
+                    "5",
+                    "10",
+                    "5",
+                    "10"
+                ],
+                "textStyle": {
+                    "color": "#ffffff",
+                    "fontFamily": "PingfangRegular",
+                    "fontSize": 20
+                },
+                "formatter": "{b}<br/>示例1：{c0}",
+                "show": "true"
+            },
+            "legend": [
+                {
+                    "show": "true",
+                    "orient": "horizontal",
+                    "data": [
+                        "01",
+                        "02",
+                        "03",
+                        "04",
+                        "05",
+                        "06",
+                        "07",
+                        "08",
+                        "09"
+                    ],
+                    "left": "right",
+                    "top": "bottom",
+                    "align": "auto",
+                    "textStyle": {
+                        "color": "#01eef3",
+                        "fontSize": 14,
+                        "fontFamily": "PingfangRegular"
+                    }
+                }
+            ],
+            "grid": [
+                {
+                    "show": "true",
+                    "top": 60,
+                    "bottom": 60,
+                    "right": 80,
+                    "left": 30,
+                    "borderWidth": 0
+                }
+            ],
+            "xAxis": [
+                null
+            ],
+            "yAxis": [
+                null
+            ],
+            "series": [
+                {
+                    "name": "",
+                    "data": [
+                        {
+                            "value": "10",
+                            "name": "01"
+                        },
+                        {
+                            "value": "20",
+                            "name": "02"
+                        },
+                        {
+                            "value": "30",
+                            "name": "03"
+                        },
+                        {
+                            "value": "40",
+                            "name": "04"
+                        },
+                        {
+                            "value": "45",
+                            "name": "05"
+                        },
+                        {
+                            "value": "60",
+                            "name": "06"
+                        },
+                        {
+                            "value": "70",
+                            "name": "07"
+                        },
+                        {
+                            "value": "40",
+                            "name": "08"
+                        },
+                        {
+                            "value": "90",
+                            "name": "09"
+                        }
+                    ],
+                    "type": "pie",
+                    "label": {
+                        "show": "true",
+                        "position": "top",
+                        "textStyle": {
+                            "color": "#01eef3",
+                            "fontSize": 14,
+                            "fontFamily": "PingfangRegular"
+                        }
+                    },
+                    "itemStyle": {
+                        "borderRadius": 5,
+                        "borderColor": "#001e4a",
+                        "borderWidth": 0
+                    },
+                    "labelLine": {
+                        "show": "true",
+                        "length": 10,
+                        "length2": 10,
+                        "smooth": 0.2,
+                        "lineStyle": {
+                            "width": 3
+                        }
+                    },
+                    "padAngle": 1.4,
+                    "radius": [
+                        "40%",
+                        "70%"
+                    ],
+                    "avoidLabelOverlap": "true",
+                    "smooth": "true",
+                    "areaStyle": {
+                        "color": "rgba(255,255,255,0)"
+                    },
+                    "symbol": "circle",
+                    "symbolSize": 20,
+                    "barWidth": 40
+                }
+            ],
+            "color": [
+                "#5470c6",
+                "#91cc75",
+                "#fac858",
+                "#ee6666",
+                "#73c0de",
+                "#3ba272",
+                "#fc8452",
+                "#9a60b4",
+                "#ea7ccc",
+                "#80FFA5",
+                "#00DDFF",
+                "#37A2FF",
+                "#FF0087",
+                "#FFBF00"
+            ],
+            "version": "ECharts.5.5.0"
+        }
+     }
+]

@@ -57,7 +57,10 @@
         "fontFamily": "PingfangRegular"
       }
     }
-  ],
+  ],"xAxis": [
+    ],
+    "yAxis": [
+    ],
   "grid": {
     "show": false,
     "top": 60,

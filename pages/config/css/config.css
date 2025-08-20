@@ -1,0 +1,331 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+:root {
+    --primary-color: #3498db;
+    --secondary-color: #2ecc71;
+    --accent-color: #9b59b6;
+    --dark-bg: #1e1f2b;
+    --darker-bg: #151620;
+    --panel-bg: #252836;
+    --border-color: #2d303d;
+    --text-color: #e0e0e0;
+    --text-secondary: #a0a0a0;
+    --hover-color: #3a3d4f;
+    --shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    --transition: all 0.3s ease;
+    --header-color: rgba(0, 0, 0, 0.2);
+}
+
+body {
+    background: var(--dark-bg);
+    color: var(--text-color);
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* 左侧配置面板 */
+.config-panel {
+    width: 350px;
+    background: var(--panel-bg);
+    border-right: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    transition: var(--transition);
+    box-shadow: var(--shadow);
+    z-index: 10;
+    position: relative;
+}
+
+.panel-header {
+    padding: 20px;
+    background: var(--darker-bg);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.panel-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.toggle-panel {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.toggle-panel:hover {
+    color: var(--primary-color);
+    transform: scale(1.1);
+}
+
+.panel-content {
+    padding: 15px 15px 50px 15px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.config-section {
+    margin-bottom: 20px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+    transition: var(--transition);
+}
+
+.config-section:hover {
+    border-color: var(--primary-color);
+}
+
+.section-header {
+    padding: 12px 15px;
+    background: var(--header-color);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: var(--transition);
+}
+
+.section-header:hover {
+    background: var(--hover-color);
+}
+
+.section-title {
+    font-weight: 600;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.section-content {
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.1);
+    display: none;
+    transition: var(--transition);
+}
+
+.section-content.active {
+    display: block;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.form-group {
+    margin-bottom: 6px;
+}
+
+.form-group hr {
+    border: 0;          /* 先清除默认边框 */
+    border-top: 1px solid var(--primary-color); /* 设置上边框为1px红色实线 */
+}
+
+label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    color: var(--text-color);
+    font-size: 0.9rem;
+    transition: var(--transition);
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+}
+
+    input[type="range"] {
+    width: 83%;
+}
+
+.range-preview{
+    display: inline-block;
+    line-height: 35px;
+    vertical-align: top;
+}
+
+button {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: var(--transition);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+button:hover {
+    background: #2980b9;
+    transform: translateY(-2px);
+}
+
+.color-picker {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.color-preview {
+    width: 30px;
+    height: 30px;
+    border-radius: 4px;
+    background: var(--primary-color);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.color-preview:hover {
+    transform: scale(1.1);
+}
+
+/* 右侧图表区域 */
+.chart-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 20px;
+    position: relative;
+    transition: var(--transition);
+}
+
+.chart-container-expand {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 20px;
+    position: absolute;
+    transition: var(--transition);
+    width: 100%;
+}
+
+/* 面板折叠状态 */
+.config-panel.collapsed {
+    transform: translateX(-100%);
+}
+
+/* 展开按钮 */
+.expand-panel-btn {
+    position: absolute;
+    top: 20px;
+    right: -40px;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 0 50% 50% 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 5;
+    opacity: 0.7;
+    transition: var(--transition);
+    box-shadow: var(--shadow);
+    display: none;
+}
+
+.expand-panel-btn:hover {
+    opacity: 1;
+    transform: translateX(5px);
+}
+
+/* 响应式设计 */
+@media (max-width: 900px) {
+    .config-panel {
+        width: 300px;
+    }
+}
+
+/* 高级选项 */
+.advanced-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+    color: var(--accent-color);
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+/* 按钮组 */
+.button-group {
+    position: fixed; /* 关键属性：固定定位 */
+    bottom: 0;       /* 紧贴屏幕底部 */
+    left: 0;         /* 左侧对齐 */
+    z-index: 100;    /* 确保悬浮在其他内容上方 */
+    width: 17.3%;
+    /* 可选样式（根据实际需求调整） */
+    background: var(--panel-bg);
+    padding: 16px;       /* 内边距 */
+    box-shadow: 0 -2px 10px rgba(0,0,0,0); /* 顶部阴影 */
+    box-sizing: border-box; /* 包含padding在宽度内 */
+    /* display: flex; */
+    gap: 10px;
+    margin-top: 20px;text-align: center; /* 按钮居中 */
+}
+
+#reset-config {
+    background: #e74c3c;
+}
+
+#reset-config:hover {
+    background: #c0392b;
+}
+
+#export-btn {
+    background: var(--accent-color);
+}
+
+#export-btn:hover {
+    background: #8e44ad;
+}

@@ -1,5 +1,5 @@
 {
-    "readme": "基础图表（柱状图bar、折线图line、饼图pie）",
+    "readme": "基础（柱状图bar、折线图line、饼图pie、散点图scatter、漏斗图funnel）图表",
     "title": [
         {
             "show":"",
@@ -24,15 +24,13 @@
         "trigger": "axis",
         "backgroundColor": "rgba(0, 0, 0, 0.5)",
         "borderColor": "#ffffff",
-        "borderRadius": 4,
         "padding": [
             5,
             10
         ],
         "textStyle": {
             "color": "#ffffff",
-            "fontStyle": "normal",
-            "fontWeight": "normal",
+            "fontFamily": "PingfangRegular",
             "fontSize": 20
         },
         "axisPointer": {
@@ -41,9 +39,6 @@
                 "backgroundColor": "transparent",
                 "borderColor": "#aaa",
                 "borderWidth": 0,
-                "shadowBlur": 0,
-                "shadowOffsetX": 0,
-                "shadowOffsetY": 0,
                 "color": "#01eef3",
                 "fontSize": 20,
                 "fontFamily": "PingfangRegular"
@@ -51,7 +46,6 @@
             "lineStyle": {
                 "type": "dashed",
                 "color": "#999",
-                "": "",
                 "width": 1,
                 "opacity": 0.5
             }
@@ -79,7 +73,8 @@
             "top": 60,
             "bottom": 60,
             "right": 30,
-            "left": 80
+            "left": 80,
+            "borderWidth":0
         }
     ],
     "xAxis": [

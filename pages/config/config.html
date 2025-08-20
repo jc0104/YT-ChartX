@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ECharts图表配置器</title>
+    <script src='https://jc0104.github.io/YT-ScriptX/scriptx.js'></script>
+</head>
+
+<body>
+    <!-- 左侧配置面板 -->
+    <div class="config-panel" id="config-panel">
+        <div class="panel-header">
+            <div class="panel-title">
+                <i class="fas fa-sliders-h"></i>
+                <span>图表配置面板</span>
+            </div>
+            <button class="toggle-panel" id="toggle-panel">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+        </div>
+
+        <div class="panel-content">
+            <!-- Echarts相关配置 -->
+            <div class="config-section">
+                <div class="section-header" data-section="chart-version">
+                    <div class="section-title">
+                        <i class="fas fa-list-check"></i>
+                        <span>报表信息</span>
+                    </div>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="section-content" id="chart-version">
+                    <div class="form-group">
+                        <label for="chart-name">报表名称</label>
+                        <input type="text" id="chart-name" value="测试报表">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="chart-version-select">Echarts版本</label>
+                        <select id="chart-version-select">
+                            <option value="6.0.0">6.0.0</option>
+                            <option value="5.5.0">5.5.0</option>
+                            <option value="5.1.2">5.1.2</option>
+                            <option value="5.0.2">5.0.2</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="chart-template-select">模板</label>
+                        <select id="chart-template-select">
+                            <option value="base/1.json">柱bar、折线line、饼pie、散点scatter、漏斗funnel</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="chart-divid">展现容器ID</label>
+                        <input type="text" id="chart-divid" value="main-chart">
+                    </div>
+                </div>
+            </div>
+
+            <!-- 标题配置 -->
+            <div class="config-section">
+                <div class="section-header" data-section="title-config">
+                    <div class="section-title">
+                        <i class="fas fa-heading"></i>
+                        <span>标题 【title】</span>
+                    </div>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="section-content" id="title-config">
+                    <div class="form-group">
+                        <label for="title-show">是否显示</label>
+                        <select id="title-show">
+                            <option value="true">显示</option>
+                            <option value="">不显示</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="title-left">标题水平位置</label>
+                        <select id="title-left">
+                            <option value="center">居中</option>
+                            <option value="left">靠左</option>
+                            <option value="right">靠右</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="title-top">标题垂直位置</label>
+                        <select id="title-top">
+                            <option value="top">顶部</option>
+                            <option value="middle">中间</option>
+                            <option value="bottom">底部</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                    <hr/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="main-title">主标题</label>
+                        <input type="text" id="main-title" value="主标题">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="title-color">标题颜色</label>
+                        <div class="color-picker">
+                            <div class="color-preview" id="title-preview" style="background: #3498db;"></div>
+                            <input type="text" id="title-color" value="#3498db">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="title-font-family">标题字体</label>
+                        <select id="title-font-family">
+                            <option value="PingfangRegular">PingfangRegular</option>
+                            <option value="DINAlternateBold">DINAlternateBold</option>
+                            <option value="AlimamaShuHeiTiBold">AlimamaShuHeiTiBold</option>
+                            <option value="pingfangjian">pingfangjian</option>
+                            <option value="dina">dina</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="title-font-size">标题字体大小</label>
+                        <input type="range" id="title-font-size" min="12" max="36" value="24">
+                        <span class="range-preview" id="title-font-size-value">24</span>
+                    </div>
+
+                    <div class="form-group">
+                    <hr/>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="sub-title">副标题</label>
+                        <input type="text" id="sub-title" value="副标题">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sub-title-color">标题颜色</label>
+                        <div class="color-picker">
+                            <div class="color-preview" id="sub-title-preview" style="background: #3498db;"></div>
+                            <input type="text" id="sub-title-color" value="#3498db">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sub-title-font-family">标题字体</label>
+                        <select id="sub-title-font-family">
+                            <option value="PingfangRegular">PingfangRegular</option>
+                            <option value="DINAlternateBold">DINAlternateBold</option>
+                            <option value="AlimamaShuHeiTiBold">AlimamaShuHeiTiBold</option>
+                            <option value="pingfangjian">pingfangjian</option>
+                            <option value="dina">dina</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sub-title-font-size">标题字体大小</label>
+                        <input type="range" id="sub-title-font-size" min="12" max="36" value="12">
+                        <span class="range-preview" id="sub-title-font-size-value">12</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sub-title-font-size">主副标题间距</label>
+                        <input type="range" id="title-itemgap-size" min="0" max="30" value="10">
+                        <span class="range-preview" id="title-itemgap-size-value">10</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- X轴配置 -->
+            <div class="config-section">
+                <div class="section-header" data-section="xaxis-config">
+                    <div class="section-title">
+                        <i class="fas fa-chart-column"></i>
+                        <span>X轴 【xaxis】</span>
+                    </div>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="section-content" id="xaxis-config">
+                    <div class="form-group">
+                        <label for="xaxis-name">X轴名称</label>
+                        <input type="text" id="xaxis-name" value="季度">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="xaxis-type">类型</label>
+                        <select id="xaxis-type">
+                            <option value="value">value</option>
+                            <option value="category" selected>category</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="xaxis-boundaryGap">X轴两边留白策略</label>
+                        <select id="xaxis-boundaryGap">
+                            <option value="true">有留白</option>
+                            <option value="">无留白</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                    <hr/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="xaxis-name-font-color">X轴名称字体颜色</label>
+                        <div class="color-picker">
+                            <div class="color-preview" id="xaxis-name-font-preview" style="background: #01eef3;"></div>
+                            <input type="text" id="xaxis-name-font-color" value="#01eef3">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="xaxis-name-font-size">X轴名称字体大小</label>
+                        <input type="range" id="xaxis-name-font-size" min="10" max="24" value="14">
+                        <span class="range-preview" id="xaxis-name-font-size-value">14</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="xaxis-name-font-family">X轴名称字体</label>
+                        <select id="xaxis-name-font-family">
+                            <option value="PingfangRegular">PingfangRegular</option>
+                            <option value="DINAlternateBold">DINAlternateBold</option>
+                            <option value="AlimamaShuHeiTiBold">AlimamaShuHeiTiBold</option>
+                            <option value="pingfangjian">pingfangjian</option>
+                            <option value="dina">dina</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                    <hr/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="xaxis-Line-show">是否显示轴线</label>
+                        <select id="xaxis-Line-show">
+                            <option value="true">显示</option>
+                            <option value="">不显示</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="xaxis-Line-color">轴线颜色</label>
+                        <div class="color-picker">
+                            <div class="color-preview" id="xaxis-Line-preview" style="background: #01eef3;"></div>
+                            <input type="text" id="xaxis-Line-color" value="#01eef3">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="xaxis-Line-width-size">轴线线宽</label>
+                        <input type="range" id="xaxis-Line-width-size" min="0" max="20" value="1">
+                        <span class="range-preview" id="xaxis-Line-width-size-value">1</span>
+                    </div>
+                    
+                    <div class="form-group">
+                    <hr/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="xaxis-Label-show">是否显示刻度标签</label>
+                        <select id="xaxis-Label-show">
+                            <option value="true">显示</option>
+                            <option value="">不显示</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="xaxis-Label-font-color">刻度字体颜色</label>
+                        <div class="color-picker">
+                            <div class="color-preview" id="xaxis-Label-font-preview" style="background: #01eef3;"></div>
+                            <input type="text" id="xaxis-Label-font-color" value="#01eef3">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="xaxis-Label-font-size">刻度字体大小</label>
+                        <input type="range" id="xaxis-Label-font-size" min="10" max="24" value="14">
+                        <span class="range-preview" id="xaxis-Label-font-size-value">14</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="xaxis-Label-font-family">刻度字体</label>
+                        <select id="xaxis-Label-font-family">
+                            <option value="PingfangRegular">PingfangRegular</option>
+                            <option value="DINAlternateBold">DINAlternateBold</option>
+                            <option value="AlimamaShuHeiTiBold">AlimamaShuHeiTiBold</option>
+                            <option value="pingfangjian">pingfangjian</option>
+                            <option value="dina">dina</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                    <hr/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="xaxis-splitLine-show">是否显示分割线</label>
+                        <select id="xaxis-splitLine-show">
+                            <option value="true">显示</option>
+                            <option value="">不显示</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="xaxis-splitLine-type">分割线类型</label>
+                        <select id="xaxis-splitLine-type">
+                            <option value="solid">solid</option>
+                            <option value="dashed">dashed</option>
+                            <option value="dotted">dotted</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="xaxis-splitLine-color">分割线颜色</label>
+                        <div class="color-picker">
+                            <div class="color-preview" id="xaxis-splitLine-preview" style="background: #1a2933;"></div>
+                            <input type="text" id="xaxis-splitLine-color" value="#1a2933">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            
+            <!-- Y轴配置 -->
+            <div class="config-section">
+                <div class="section-header" data-section="yaxis-config">
+                    <div class="section-title">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>Y轴 【yaxis】</span>
+                    </div>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="section-content" id="yaxis-config">    
+                    <div class="form-group">
+                        <label for="yaxis-name">Y轴名称</label>
+                        <input type="text" id="yaxis-name" value="销售额（万元）">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="yaxis-type">类型</label>
+                        <select id="yaxis-type">
+                            <option value="value">value</option>
+                            <option value="category">category</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="yaxis-boundaryGap">Y轴两边留白策略</label>
+                        <select id="yaxis-boundaryGap">
+                            <option value="true">有留白</option>
+                            <option value="">无留白</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                    <hr/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="yaxis-name-font-color">Y轴名称字体颜色</label>
+                        <div class="color-picker">
+                            <div class="color-preview" id="yaxis-name-font-preview" style="background: #01eef3;"></div>
+                            <input type="text" id="yaxis-name-font-color" value="#01eef3">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="yaxis-name-font-size">Y轴名称字体大小</label>
+                        <input type="range" id="yaxis-name-font-size" min="10" max="24" value="14">
+                        <span class="range-preview" id="yaxis-name-font-size-value">14</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="yaxis-name-font-family">Y轴名称字体</label>
+                        <select id="yaxis-name-font-family">
+                            <option value="PingfangRegular">PingfangRegular</option>
+                            <option value="DINAlternateBold">DINAlternateBold</option>
+                            <option value="AlimamaShuHeiTiBold">AlimamaShuHeiTiBold</option>
+                            <option value="pingfangjian">pingfangjian</option>
+                            <option value="dina">dina</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                    <hr/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="yaxis-Line-show">是否显示轴线</label>
+                        <select id="yaxis-Line-show">
+                            <option value="true">显示</option>
+                            <option value="">不显示</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="yaxis-Line-color">轴线颜色</label>
+                        <div class="color-picker">
+                            <div class="color-preview" id="yaxis-Line-preview" style="background: #01eef3;"></div>
+                            <input type="text" id="yaxis-Line-color" value="#01eef3">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="yaxis-Line-width-size">轴线线宽</label>
+                        <input type="range" id="yaxis-Line-width-size" min="0" max="20" value="1">
+                        <span class="range-preview" id="yaxis-Line-width-size-value">1</span>
+                    </div>
+
+                    <div class="form-group">
+                    <hr/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="yaxis-Label-show">是否显示刻度标签</label>
+                        <select id="yaxis-Label-show">
+                            <option value="true">显示</option>
+                            <option value="">不显示</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="yaxis-Label-font-color">刻度字体颜色</label>
+                        <div class="color-picker">
+                            <div class="color-preview" id="yaxis-Label-font-preview" style="background: #01eef3;"></div>
+                            <input type="text" id="yaxis-Label-font-color" value="#01eef3">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="yaxis-Label-font-size">刻度字体大小</label>
+                        <input type="range" id="yaxis-Label-font-size" min="10" max="24" value="14">
+                        <span class="range-preview" id="yaxis-Label-font-size-value">14</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="yaxis-Label-font-family">刻度字体</label>
+                        <select id="yaxis-Label-font-family">
+                            <option value="PingfangRegular">PingfangRegular</option>
+                            <option value="DINAlternateBold">DINAlternateBold</option>
+                            <option value="AlimamaShuHeiTiBold">AlimamaShuHeiTiBold</option>
+                            <option value="pingfangjian">pingfangjian</option>
+                            <option value="dina">dina</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                    <hr/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="yaxis-splitLine-show">是否显示分割线</label>
+                        <select id="yaxis-splitLine-show">
+                            <option value="true">显示</option>
+                            <option value="">不显示</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="yaxis-splitLine-type">分割线类型</label>
+                        <select id="yaxis-splitLine-type">
+                            <option value="solid">solid</option>
+                            <option value="dashed">dashed</option>
+                            <option value="dotted">dotted</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="yaxis-splitLine-color">分割线颜色</label>
+                        <div class="color-picker">
+                            <div class="color-preview" id="yaxis-splitLine-preview" style="background: #1a2933;"></div>
+                            <input type="text" id="yaxis-splitLine-color" value="#1a2933">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 图表类型配置 -->
+            <div class="config-section">
+                <div class="section-header" data-section="series-config">
+                    <div class="section-title">
+                        <i class="fas fa-chart-pie"></i>
+                        <span>图表系列 【series】</span>
+                    </div>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="section-content" id="series-config">
+                    <!-- <div class="form-group">
+                        <label for="chart-series-size">图表系列个数</label>
+                        <input type="range" id="chart-series-size" min="1" max="5" value="1">
+                        <span class="range-preview" id="chart-series-size-value">1</span>
+                    </div> -->
+
+                    <div class="form-group">
+                        <label for="series-type-select">图表类型</label>
+                        <select id="series-type-select">
+                            <option value="bar">柱状图</option>
+                            <option value="line">折线图</option>
+                            <option value="pie">饼图</option>
+                            <option value="scatter">散点图</option>
+                            <option value="funnel">漏斗图</option>
+                            <!-- <option value="radar">雷达图</option>
+                            <option value="gauge">仪表盘</option> -->
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="series-name">名称</label>
+                        <input type="text" id="series-name" value="">
+                    </div>
+
+                    <div class="form-group">
+                    <hr/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="series-Label-show">是否显示标签</label>
+                        <select id="series-Label-show">
+                            <option value="true">显示</option>
+                            <option value="">不显示</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="series-Label-position">标签位置</label>
+                        <select id="series-Label-position">
+                            <option value="top">top</option>
+                            <option value="left">left</option>
+                            <option value="right">right</option>
+                            <option value="bottom">bottom</option>
+                            <option value="inside">inside</option>
+                            <option value="insideLeft">insideLeft</option>
+                            <option value="insideRight">insideRight</option>
+                            <option value="insideTop">insideTop</option>
+                            <option value="insideBottom">insideBottom</option>
+                            <option value="insideTopLeft">insideTopLeft</option>
+                            <option value="insideBottomLeft">insideBottomLeft</option>
+                            <option value="insideTopRight">insideTopRight</option>
+                            <option value="insideBottomRight">insideBottomRight</option>
+                            <option value="outside">outside</option>
+                            <option value="center">center</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="series-Label-font-color">标签字体颜色</label>
+                        <div class="color-picker">
+                            <div class="color-preview" id="series-Label-font-preview" style="background: #01eef3;"></div>
+                            <input type="text" id="series-Label-font-color" value="#01eef3">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="series-Label-font-size">标签字体大小</label>
+                        <input type="range" id="series-Label-font-size" min="10" max="24" value="14">
+                        <span class="range-preview" id="series-Label-font-size-value">14</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="series-Label-font-family">标签字体</label>
+                        <select id="series-Label-font-family">
+                            <option value="PingfangRegular">PingfangRegular</option>
+                            <option value="DINAlternateBold">DINAlternateBold</option>
+                            <option value="AlimamaShuHeiTiBold">AlimamaShuHeiTiBold</option>
+                            <option value="pingfangjian">pingfangjian</option>
+                            <option value="dina">dina</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                    <hr/>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="series-itemStyle-border-color">图形边框颜色</label>
+                        <div class="color-picker">
+                            <div class="color-preview" id="series-itemStyle-border-preview" style="background: #001e4a;"></div>
+                            <input type="text" id="series-itemStyle-border-color" value="#001e4a">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="series-itemStyle-border-width">图形边框宽度</label>
+                        <input type="range" id="series-itemStyle-border-width-size" min="0" max="24" value="0">
+                        <span class="range-preview" id="series-itemStyle-border-width-size-value">0</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="series-itemStyle-border-radius">图形边框圆角半径</label>
+                        <input type="range" id="series-itemStyle-border-radius-size" min="0" max="24" value="5">
+                        <span class="range-preview" id="series-itemStyle-border-radius-size-value">5</span>
+                    </div>
+                    
+                    <div class="form-group">
+                    <hr/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="series-labelLine-show">是否显示引导线</label>
+                        <select id="series-labelLine-show">
+                            <option value="true">显示</option>
+                            <option value="">不显示</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="series-labelLine-length-size">引导线第一段长度</label>
+                        <input type="range" id="series-labelLine-length-size" min="10" max="500" value="0">
+                        <span class="range-preview" id="series-labelLine-length-size-value">0</span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="series-labelLine-length2-size">引导线第二段长度</label>
+                        <input type="range" id="series-labelLine-length2-size" min="10" max="500" value="0">
+                        <span class="range-preview" id="series-labelLine-length2-size-value">0</span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="series-labelLine-smooth-size">引导线平滑度</label>
+                        <input type="range" id="series-labelLine-smooth-size" min="0" max="1" step="0.1" value="0.2">
+                        <span class="range-preview" id="series-labelLine-smooth-size-value">0.2</span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="series-labelLine-width-size">引导线宽度</label>
+                        <input type="range" id="series-labelLine-width-size" min="0" max="50" value="3">
+                        <span class="range-preview" id="series-labelLine-width-size-value">3</span>
+                    </div>
+
+                    <div class="form-group">
+                    <hr/>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="series-bar-width-size">柱状图-柱条宽度</label>
+                        <input type="range" id="series-bar-width-size" min="10" max="100" value="40">
+                        <span class="range-preview" id="series-bar-width-size-value">40</span>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="series-line-smooth">折线图-是否平滑曲线显示</label>
+                        <select id="series-line-smooth">
+                            <option value="true">显示</option>
+                            <option value="">不显示</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="series-line-symbol">折线图-标记图形</label>
+                        <select id="series-line-symbol">
+                            <option value="circle">circle</option>
+                            <option value="rect">rect</option>
+                            <option value="roundRect">roundRect</option>
+                            <option value="triangle">triangle</option>
+                            <option value="diamond">diamond</option>
+                            <option value="pin">pin</option>
+                            <option value="arrow">arrow</option>
+                            <option value="none">none</option>
+                        </select>
+                    </div>                    
+                    <div class="form-group">
+                        <label for="series-line-symbol-size">折线图-标记大小</label>
+                        <input type="range" id="series-line-symbol-size" min="10" max="100" value="20">
+                        <span class="range-preview" id="series-line-symbol-size-value">20</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="series-line-areaStyle-color">折线图-区域填充</label>
+                        <div class="color-picker">
+                            <div class="color-preview" id="series-line-areaStyle-preview" style="background: rgba(255,255,255,0);"></div>
+                            <input type="text" id="series-line-areaStyle-color" value="rgba(255,255,255,0)">
+                        </div>
+                    </div>                    
+                    <div class="form-group">
+                        <label for="series-pie-avoidLabelOverlap">饼图-是否启用防止标签重叠</label>
+                        <select id="series-pie-avoidLabelOverlap">
+                            <option value="true">启用</option>
+                            <option value="">不启用</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="series-pie-padAngle-size">饼图-扇区间隔角度</label>
+                        <input type="range" id="series-pie-padAngle-size" min="0" max="3" step="0.1" value="1.4">
+                        <span class="range-preview" id="series-pie-padAngle-size-value">1.4</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="series-pie-radius">饼图-半径（内半径，外半径）</label>
+                        <input type="text" id="series-pie-radius" value="40%,70%">
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 图例配置 -->
+            <div class="config-section">
+                <div class="section-header" data-section="legend-config">
+                    <div class="section-title">
+                        <i class="fas fa-list"></i>
+                        <span>图例 【legend】</span>
+                    </div>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="section-content" id="legend-config">      
+                    <div class="form-group">
+                        <label for="legend-show">是否显示图例</label>
+                        <select id="legend-show">
+                            <option value="true">显示</option>
+                            <option value="">不显示</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="legend-orient">布局朝向</label>
+                        <select id="legend-orient">
+                            <option value="horizontal">水平</option>
+                            <option value="vertical">垂直</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="legend-align">标记文本对齐</label>
+                        <select id="legend-align">
+                            <option value="auto">自动</option>
+                            <option value="left">靠左对齐</option>
+                            <option value="right">靠右对齐</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="legend-left">水平位置</label>
+                        <select id="legend-left">
+                            <option value="left">靠左</option>
+                            <option value="center">居中</option>
+                            <option value="right">靠右</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="legend-top">垂直位置</label>
+                        <select id="legend-top">
+                            <option value="top">顶部</option>
+                            <option value="middle">居中</option>
+                            <option value="bottom">底部</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                    <hr/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="legend-font-color">字体颜色</label>
+                        <div class="color-picker">
+                            <div class="color-preview" id="legend-font-preview" style="background: #01eef3;"></div>
+                            <input type="text" id="legend-font-color" value="#01eef3">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="legend-font-size">字体大小</label>
+                        <input type="range" id="legend-font-size" min="10" max="24" value="14">
+                        <span class="range-preview" id="legend-font-size-value">14</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="legend-font-family">字体</label>
+                        <select id="legend-font-family">
+                            <option value="PingfangRegular">PingfangRegular</option>
+                            <option value="DINAlternateBold">DINAlternateBold</option>
+                            <option value="AlimamaShuHeiTiBold">AlimamaShuHeiTiBold</option>
+                            <option value="pingfangjian">pingfangjian</option>
+                            <option value="dina">dina</option>
+                        </select>
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <!-- 提示框配置 -->
+            <div class="config-section">
+                <div class="section-header" data-section="tooltip-config">
+                    <div class="section-title">
+                        <i class="fas fa-comment"></i>
+                        <span>提示框 【tooltip】</span>
+                    </div>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="section-content" id="tooltip-config">  
+                    <div class="form-group">
+                        <label for="tooltip-show">是否显示提示框</label>
+                        <select id="tooltip-show">
+                            <option value="true">显示</option>
+                            <option value="">不显示</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tooltip-trigger">触发类型</label>
+                        <select id="tooltip-trigger">
+                            <option value="item">数据项图形触发</option>
+                            <option value="axis" selected>坐标轴触发</option>
+                            <option value="none">不触发</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                    <hr/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tooltip-backgroundColor">提示框背景色</label>
+                        <div class="color-picker">
+                            <div class="color-preview" id="tooltip-background-preview" style="background: rgba(0, 0, 0, 0.5);"></div>
+                            <input type="text" id="tooltip-background-color" value="rgba(0, 0, 0, 0.5)">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tooltip-borderColor">提示框边框颜色</label>
+                        <div class="color-picker">
+                            <div class="color-preview" id="tooltip-border-preview" style="background: #ffffff;"></div>
+                            <input type="text" id="tooltip-border-color" value="#ffffff">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="tooltip-padding">提示框内边距（上、右、下、左）</label>
+                        <input type="text" id="tooltip-padding" value="5,10,5,10">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="tooltip-formatter">内容格式器</label>
+                        <input type="text" id="tooltip-formatter" value="{b}<br/>示例1：{c0}">
+                    </div>
+
+                    <div class="form-group">
+                    <hr/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tooltip-font-color">字体颜色</label>
+                        <div class="color-picker">
+                            <div class="color-preview" id="tooltip-font-preview" style="background: #ffffff;"></div>
+                            <input type="text" id="tooltip-font-color" value="#ffffff">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tooltip-font-size">字体大小</label>
+                        <input type="range" id="tooltip-font-size" min="10" max="24" value="20">
+                        <span class="range-preview" id="tooltip-font-size-value">20</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tooltip-font-family">字体</label>
+                        <select id="tooltip-font-family">
+                            <option value="PingfangRegular">PingfangRegular</option>
+                            <option value="DINAlternateBold">DINAlternateBold</option>
+                            <option value="AlimamaShuHeiTiBold">AlimamaShuHeiTiBold</option>
+                            <option value="pingfangjian">pingfangjian</option>
+                            <option value="dina">dina</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                    <hr/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tooltip-axisPointer-type">坐标轴指示器类型</label>
+                        <select id="tooltip-axisPointer-type">
+                            <option value="line">直线指示器</option>
+                            <option value="shadow">阴影指示器</option>
+                            <option value="cross" selected>交叉指示器</option>
+                            <option value="none">无指示器</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tooltip-axisPointer-label-font-color">坐标标签字体颜色</label>
+                        <div class="color-picker">
+                            <div class="color-preview" id="tooltip-axisPointer-label-font-preview" style="background: #ffffff;"></div>
+                            <input type="text" id="tooltip-axisPointer-label-font-color" value="#ffffff">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tooltip-axisPointer-label-font-size">坐标标签字体大小</label>
+                        <input type="range" id="tooltip-axisPointer-label-font-size" min="10" max="24" value="20">
+                        <span class="range-preview" id="tooltip-axisPointer-label-font-size-value">20</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tooltip-axisPointer-label-font-family">坐标标签字体</label>
+                        <select id="tooltip-axisPointer-label-font-family">
+                            <option value="PingfangRegular">PingfangRegular</option>
+                            <option value="DINAlternateBold">DINAlternateBold</option>
+                            <option value="AlimamaShuHeiTiBold">AlimamaShuHeiTiBold</option>
+                            <option value="pingfangjian">pingfangjian</option>
+                            <option value="dina">dina</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tooltip-axisPointer-label-backgroundColor">坐标标签背景色</label>
+                        <div class="color-picker">
+                            <div class="color-preview" id="tooltip-axisPointer-label-background-preview" style="background: transparent;"></div>
+                            <input type="text" id="tooltip-axisPointer-label-background-color" value="transparent">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tooltip-axisPointer-label-borderColor">坐标标签边框颜色</label>
+                        <div class="color-picker">
+                            <div class="color-preview" id="tooltip-axisPointer-label-border-preview" style="background: #aaa;"></div>
+                            <input type="text" id="tooltip-axisPointer-label-border-color" value="#aaa">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tooltip-axisPointer-label-borderWidth-size">坐标标签边框宽度</label>
+                        <input type="range" id="tooltip-axisPointer-label-borderWidth-size" min="0" max="10" value="0">
+                        <span class="range-preview" id="tooltip-axisPointer-label-borderWidth-size-value">0</span>
+                    </div>
+
+                    <div class="form-group">
+                    <hr/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tooltip-axisPointer-line-type">坐标轴指示器类型</label>
+                        <select id="tooltip-axisPointer-line-type">
+                            <option value="solid">实线</option>
+                            <option value="dashed" selected>虚线</option>
+                            <option value="dotted">点线</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tooltip-axisPointer-line-color">坐标线颜色</label>
+                        <div class="color-picker">
+                            <div class="color-preview" id="tooltip-axisPointer-line-preview" style="background: #999;"></div>
+                            <input type="text" id="tooltip-axisPointer-line-color" value="#999">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tooltip-axisPointer-line-width-size">坐标线宽度</label>
+                        <input type="range" id="tooltip-axisPointer-line-width-size" min="0" max="10" value="1">
+                        <span class="range-preview" id="tooltip-axisPointer-line-width-size-value">1</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tooltip-axisPointer-line-opacity-size">坐标线透明度</label>
+                        <input type="range" id="tooltip-axisPointer-line-opacity-size" min="0" max="1" step="0.1" value="0.5">
+                        <span class="range-preview" id="tooltip-axisPointer-line-opacity-size-value">0.5</span>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- 提示框配置 -->
+            <div class="config-section">
+                <div class="section-header" data-section="grid-config">
+                    <div class="section-title">
+                        <i class="fa-solid fa-table-cells-large"></i>
+                        <span>组件网格 【grid】</span>
+                    </div>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="section-content" id="grid-config">
+                    <div class="form-group">
+                        <label for="grid-show">是否启用网格</label>
+                        <select id="grid-show">
+                            <option value="true">启用</option>
+                            <option value="">不启用</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="grid-top-size">距离顶部距离</label>
+                        <input type="range" id="grid-top-size" min="0" max="500" step="1" value="60">
+                        <span class="range-preview" id="grid-top-size-value">60</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="grid-bottom-size">距离底部距离</label>
+                        <input type="range" id="grid-bottom-size" min="0" max="500" step="1" value="60">
+                        <span class="range-preview" id="grid-bottom-size-value">60</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="grid-left-size">距离左边距离</label>
+                        <input type="range" id="grid-left-size" min="0" max="500" step="1" value="30">
+                        <span class="range-preview" id="grid-left-size-value">30</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="grid-right-size">距离右边距离</label>
+                        <input type="range" id="grid-right-size" min="0" max="500" step="1" value="80">
+                        <span class="range-preview" id="grid-right-size-value">80</span>
+                    </div>
+                    <div class="form-group">
+                        <label for="grid-borderWidth-size">边框宽度</label>
+                        <input type="range" id="grid-borderWidth-size" min="0" max="10" step="1" value="0">
+                        <span class="range-preview" id="grid-borderWidth-size-value">0</span>
+                    </div>
+
+                </div>
+            </div>
+
+            
+            <!-- 数据配置 -->
+            <!-- <div class="config-section">
+                <div class="section-header" data-section="data-config">
+                    <div class="section-title">
+                        <i class="fas fa-database"></i>
+                        <span>数据设置</span>
+                    </div>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="section-content" id="data-config">
+                    <div class="form-group">
+                        <label for="xaxis-data">X轴数据 (逗号分隔)</label>
+                        <textarea id="xaxis-data">第一季度,第二季度,第三季度,第四季度</textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="yaxis-data">Y轴数据 (逗号分隔)</label>
+                        <textarea id="yaxis-data">120, 200, 150, 80</textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="data-color">数据颜色</label>
+                        <div class="color-picker">
+                            <div class="color-preview" id="data-preview" style="background: #2ecc71;"></div>
+                            <input type="text" id="data-color" value="#2ecc71">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="show-data-labels">显示数据标签</label>
+                        <select id="show-data-labels">
+                            <option value="true">是</option>
+                            <option value="false">否</option>
+                        </select>
+                    </div>
+
+                    <div class="advanced-toggle">
+                        <i class="fas fa-cog"></i>
+                        <span>高级数据选项</span>
+                    </div>
+                </div>
+            </div> -->
+
+            <!-- 动作按钮 -->
+            <div class="button-group">
+                <button id="apply-config">
+                    <i class="fas fa-sync-alt"></i>
+                    <span>应用</span>
+                </button>
+                <!-- <button id="reset-config">
+                    <i class="fas fa-undo"></i>
+                    <span>重置</span>
+                </button>-->
+                <button id="export-btn">
+                    <i class="fas fa-download"></i>
+                    <span>导出</span>
+                </button> 
+            </div>
+        </div>
+
+        <!-- 展开按钮 -->
+        <button class="expand-panel-btn" id="expand-panel">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+    </div>
+
+    <!-- 右侧图表区域 -->
+    <div class="chart-container" id="main-chart"></div>
+
+    <script> 
+        css = [
+            webUrl + "pages/config/css/config.css"
+        ];
+        scripts = [
+            webUrl + "chartx.js",
+            webUrl + "pages/config/js/config.js"
+        ];
+
+        loadPage(function () {
+            SN = " | 图表中心"
+            sectionSet();
+            renderChart();
+        });
+    </script>
+</body>
+
+</html>

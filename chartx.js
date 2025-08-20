@@ -99,8 +99,42 @@ var echartsSetInfo = {
 // }
 
 
-
-
+//****************************************************************************************************************************************************
+//获取echarts图表列表-开始
+//----------------------------------------------------------------------------------------------------------------------------------------------------
+//调用入口
+var getEchartsList = function name(getAPI, callback) {
+    jQuery.support.cors = true;
+    $.ajax({
+        cache: false,
+        type: (getAPI.type == "" ? "POST" : getAPI.type),
+        async: ((IsNull(getAPI.IsAsync) === false || IsNull(getAPI.IsAsync) == "") ? false : true),
+        url: getAPI.url,
+        data: JSON.stringify(getAPI.params),
+        dataType: "json",
+        contentType: "application/json;charset=utf-8",
+        success: function (Data) {
+            if (typeof callback === 'function') callback(Data);
+        },
+        error: function (xhr, status, err) {
+            console.error("加载失败:", status, err);
+        }
+    });
+}
+/* 调用示例
+    getEchartsList({
+        "url": webUrl+"data/page_echarts_list.json",
+        "params": null,
+        "type": "get",
+        "IsAsync": true
+    }, function (Data) {
+        images=Data;
+        initGallery()
+    });
+*/
+//----------------------------------------------------------------------------------------------------------------------------------------------------
+//获取echarts图表列表-结束
+//****************************************************************************************************************************************************
 //****************************************************************************************************************************************************
 //加载echarts图表-开始
 //----------------------------------------------------------------------------------------------------------------------------------------------------
@@ -202,8 +236,6 @@ var showEcharts = function (iCakkback, oCallback, eCallback) {
                     option.version = "ECharts." + echarts.version
                     if (typeof oCallback === 'function') oCallback(option);
 
-                    console.log(option);
-
                     var chartDom = document.getElementById(eDivID);
                     chartDom.style.position = '';
                     var myChart = echarts.init(chartDom);
@@ -280,11 +312,9 @@ showEcharts(
     },
     function (option) {
         option.xAxis[0].show = true
-        console.log(option);
     },
     function (myChart) {
         myChart.on('click', (params) => {
-            console.log(params);
             alert(params.name + "\r\n" + params.value)
         })
     }
